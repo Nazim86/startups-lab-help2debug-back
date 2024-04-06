@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { Provider } from './account.enum';
 import { User } from './user.entity';
+import { MentorSetting } from '../../mentor-setting/entities/mentorSetting.entity';
 
 @Entity()
 export class Account {
@@ -31,4 +32,7 @@ export class Account {
   @OneToOne(() => User, (u) => u.account)
   @JoinColumn()
   user: User;
+
+  @OneToOne(() => MentorSetting, (m) => m.account)
+  mentorSetting: MentorSetting;
 }

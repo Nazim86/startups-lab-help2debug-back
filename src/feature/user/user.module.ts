@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { UserController } from './api/user.controller';
-import { USER_ENTITIES, USER_USE_CASES } from './application/use-cases';
+import { USER_USE_CASES } from './application/use-cases';
 import { UserFacade } from './user.facade';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CqrsModule } from '@nestjs/cqrs';
 import { UserRepository } from './db';
+import { USER_ENTITIES } from './entities';
 
 @Module({
   imports: [TypeOrmModule.forFeature(USER_ENTITIES), CqrsModule],

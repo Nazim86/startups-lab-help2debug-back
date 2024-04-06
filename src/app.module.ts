@@ -12,6 +12,9 @@ import { DeviceModule } from './feature/device/device.module';
 import { JWTModule } from './core/jwt-adapter/jwt.module';
 import { CqrsModule } from '@nestjs/cqrs';
 import { AppConfig } from './core/config/application';
+import { MentorSettingModule } from './feature/mentor-setting/mentor-setting.module';
+import { IssueModule } from './feature/issue/issue.module';
+import { SessionModule } from './feature/session/session.module';
 
 export const configModule = ConfigModule.forRoot({
   isGlobal: true,
@@ -54,6 +57,9 @@ export const localConfigTypeOrm: TypeOrmModuleOptions = {
     AuthModule,
     DeviceModule,
     JWTModule,
+    MentorSettingModule,
+    IssueModule,
+    SessionModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppConfig],
