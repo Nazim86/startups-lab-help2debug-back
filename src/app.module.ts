@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 
 import process from 'process';
@@ -61,7 +59,6 @@ export const localConfigTypeOrm: TypeOrmModuleOptions = {
     IssueModule,
     SessionModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, AppConfig],
+  providers: [AppConfig],
 })
 export class AppModule {}
