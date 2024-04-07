@@ -1,12 +1,16 @@
 import {
   Column,
   Entity,
+  ManyToMany,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Account } from './account.entity';
-import { Device } from '../../device/entities/device.entity';
+import { Device } from '../../device/entities';
+import { Hashtag } from '../../hashtag/entities/hashtag.entity';
+import { Session } from '../../session/entities/session.entity';
+import { Issue } from '../../issue/entities';
 
 @Entity()
 export class User {
@@ -33,4 +37,13 @@ export class User {
 
   @OneToMany(() => Device, (d) => d.user)
   device: Device;
+
+  @ManyToMany(() => Hashtag, (h) => h.user)
+  hashtag: Hashtag[];
+
+  @ManyToMany(() => Session, (s) => s.user)
+  session: Session[];
+
+  @OneToMany(() => Issue, (i) => i.user)
+  issue: Issue[];
 }

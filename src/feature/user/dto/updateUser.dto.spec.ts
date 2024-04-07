@@ -1,7 +1,7 @@
 import { plainToInstance } from 'class-transformer';
 import { UpdateUserDto } from './updateUser.dto';
 import { validate } from 'class-validator';
-import { randomString } from '@gateway/test/e2e.tests/utils/tests.utils';
+import { randomString } from '../../../../test/tests.utils';
 
 describe('UpdateUserDto', () => {
   let correctInputData;
