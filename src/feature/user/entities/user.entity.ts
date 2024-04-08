@@ -10,7 +10,7 @@ import { Account } from './account.entity';
 import { Device } from '../../device/entities';
 import { Hashtag } from '../../hashtag/entities/hashtag.entity';
 import { Session } from '../../session/entities/session.entity';
-import { Issue } from '../../issue/entities';
+import { Issue } from '../../issue/entities/issue.entity';
 
 @Entity()
 export class User {

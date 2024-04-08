@@ -5,7 +5,7 @@ import { DeviceRepository } from '../../db';
 import { CreateTokensType } from '../../types/createTokens.type';
 import { JwtAdapter } from '../../../../core/jwt-adapter/jwt.adapter';
 import { Result } from '../../../../core/result';
-import { Device } from '../../entities/device.entity';
+import { Device } from '../../entities';
 
 export class CreateDeviceCommand {
   constructor(public deviceDto: DeviceDto) {}
