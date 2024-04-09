@@ -40,6 +40,8 @@ export abstract class BaseProvideLoginUseCase {
       );
     }
 
+    console.log('test');
+
     const resultLink =
       await this.userFacade.useCases.linkProviderUserToExistingUser(
         this.provider,
