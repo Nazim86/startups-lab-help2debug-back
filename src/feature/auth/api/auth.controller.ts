@@ -8,9 +8,9 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { GitHubLoginDto } from '../dto/gitHubLogin.dto';
+import { GitHubLoginDto } from '../dto';
 import { UserAgent } from '../../../core/decorators/userAgent.decorator';
-import { LoginProviderDto } from '../dto/loginProvider.dto';
+import { LoginProviderDto } from '../dto';
 import { ResponseAccessTokenDto } from '../../device/responses';
 
 @ApiTags('Auth')

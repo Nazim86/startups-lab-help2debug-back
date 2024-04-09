@@ -46,7 +46,7 @@ export const localConfigTypeOrm: TypeOrmModuleOptions = {
 };
 @Module({
   imports: [
-    TypeOrmModule.forRoot(localConfigTypeOrm),
+    TypeOrmModule.forRoot(neonConfigForTypeOrm),
     //TypeOrmModule.forFeature(entities),
     configModule,
     CqrsModule,
