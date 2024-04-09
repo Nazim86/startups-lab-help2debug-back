@@ -1,7 +1,6 @@
 import {
   Column,
   Entity,
-  JoinTable,
   ManyToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -41,7 +40,6 @@ export class Session {
   code: string;
 
   @ManyToMany(() => User, (u) => u.session)
-  @JoinTable()
   user: User[];
 
   @OneToOne(() => Issue, (i) => i.session)

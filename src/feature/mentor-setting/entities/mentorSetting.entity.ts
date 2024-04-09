@@ -1,10 +1,4 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { HelpType } from '../types/helpType.enum';
 import { LiveStatus } from '../types/liveStatus.enum';
 import { Account } from '../../user/entities/account.entity';
@@ -30,6 +24,5 @@ export class MentorSetting {
   statusUpdate: Date;
 
   @OneToOne(() => Account, (a) => a.mentorSetting)
-  @JoinColumn()
   account: Account;
 }

@@ -1,10 +1,4 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 
 @Entity()
@@ -28,6 +22,5 @@ export class Device {
   expirationDate: Date;
 
   @ManyToOne(() => User, (u) => u.device, { onDelete: 'CASCADE' })
-  @JoinColumn()
   user: User;
 }

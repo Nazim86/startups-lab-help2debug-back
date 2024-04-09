@@ -16,7 +16,10 @@ import { SessionModule } from './feature/session/session.module';
 
 export const configModule = ConfigModule.forRoot({
   isGlobal: true,
-  envFilePath: process.env.NODE_ENV === 'development' ? '.env' : 'prod.env',
+  envFilePath:
+    process.env.NODE_ENV === 'development'
+      ? 'envs/development.env'
+      : 'envs/prod.env',
 });
 
 const entities = [];
@@ -30,7 +33,7 @@ export const neonConfigForTypeOrm: TypeOrmModuleOptions = {
   ssl: true,
   database: process.env.PG_DATABASE,
   autoLoadEntities: true,
-  synchronize: false,
+  synchronize: true,
 };
 
 export const localConfigTypeOrm: TypeOrmModuleOptions = {
@@ -44,9 +47,26 @@ export const localConfigTypeOrm: TypeOrmModuleOptions = {
   autoLoadEntities: true,
   synchronize: true,
 };
+
+export const typeormConfig: TypeOrmModuleOptions = {
+  type: 'postgres',
+  host: process.env.PG_HOST,
+  port: parseInt(process.env.PG_PORT),
+  username: process.env.PG_USER,
+  password: process.env.PG_PASS,
+  entities,
+  ssl: true,
+  database: process.env.PG_DATABASE,
+  autoLoadEntities: true,
+  synchronize: true,
+};
 @Module({
   imports: [
-    TypeOrmModule.forRoot(neonConfigForTypeOrm),
+    TypeOrmModule.forRoot(
+      process.env.NODE_ENV === 'production'
+        ? neonConfigForTypeOrm
+        : localConfigTypeOrm,
+    ),
     //TypeOrmModule.forFeature(entities),
     configModule,
     CqrsModule,
