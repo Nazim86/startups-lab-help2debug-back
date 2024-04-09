@@ -13,6 +13,8 @@ import { AppConfig } from './core/config/application';
 import { MentorSettingModule } from './feature/mentor-setting/mentor-setting.module';
 import { IssueModule } from './feature/issue/issue.module';
 import { SessionModule } from './feature/session/session.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 export const configModule = ConfigModule.forRoot({
   isGlobal: true,
@@ -46,6 +48,10 @@ export const localConfigTypeOrm: TypeOrmModuleOptions = {
 };
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'swagger-static'),
+      serveRoot: process.env.NODE_ENV === 'development' ? '/' : '/swagger',
+    }),
     TypeOrmModule.forRoot(neonConfigForTypeOrm),
     //TypeOrmModule.forFeature(entities),
     configModule,
