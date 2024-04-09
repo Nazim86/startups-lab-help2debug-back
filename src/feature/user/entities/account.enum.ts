@@ -1,3 +1,3 @@
 export enum Provider {
-  GIT_HUB,
+  GIT_HUB = 'GitHub',
 }

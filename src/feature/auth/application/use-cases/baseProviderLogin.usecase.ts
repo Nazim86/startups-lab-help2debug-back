@@ -1,5 +1,5 @@
 import { Result } from '../../../../core/result';
-import { LoginProviderDto } from '../../dto/loginProvider.dto';
+import { LoginProviderDto } from '../../dto';
 import { ProviderUserResponse } from '../../response';
 import { CreateTokensType } from '../../../device/types/createTokens.type';
 import { UserFacade } from '../../../user/user.facade';

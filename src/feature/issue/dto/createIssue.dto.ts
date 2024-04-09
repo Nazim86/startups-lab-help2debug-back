@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsEnum, IsNotEmpty, IsString } from 'class-validator';
 import { HelpType } from '../../mentor-setting/types/helpType.enum';
 
 export class CreateIssueDto {
@@ -36,8 +36,9 @@ export class CreateIssueDto {
     description: 'Hashtags for technologies',
     type: 'string',
     example: ['react', 'redux', 'mobx'],
+    isArray: true,
   })
-  @IsString()
+  @IsArray()
   @IsNotEmpty()
   hashtags: string[];
 }

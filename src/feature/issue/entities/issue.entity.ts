@@ -16,8 +16,8 @@ export class Issue {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'varchar' })
-  accountId: string;
+  // @Column({ type: 'varchar' })
+  // accountId: string;
 
   @Column({ type: 'varchar' })
   type: HelpType;

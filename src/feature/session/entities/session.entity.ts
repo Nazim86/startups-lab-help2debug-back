@@ -1,16 +1,15 @@
 import {
   Column,
   Entity,
-  JoinColumn,
   JoinTable,
   ManyToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Issue } from '../../issue/entities';
 import { User } from '../../user/entities/user.entity';
 import { SessionStatus } from '../types/sessionStatus.enum';
 import { StatusByParticipant } from '../types/statusByParticipant.enum';
+import { Issue } from '../../issue/entities/issue.entity';
 
 @Entity()
 export class Session {

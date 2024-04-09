@@ -26,7 +26,7 @@ export class UserFacade {
       params: UpdateUserProviderByProviderIdParams,
       data: UpdateUserProviderByProviderIdData,
     ) => this.updateUserProviderByProviderId(params, data),
-    //findUserById: (userId: string) => this.findUserById(userId),
+    findUserById: (userId: string) => this.findUserById(userId),
   };
 
   useCases = {
@@ -81,7 +81,7 @@ export class UserFacade {
     >(new LinkProviderUserToExistingUserCommand(provider, userData));
   }
 
-  // private async findUserById(userId: string) {
-  //   return this.userRepo.findById(userId);
-  // }
+  private async findUserById(userId: string) {
+    return this.userRepo.findUserById(userId);
+  }
 }
