@@ -10,9 +10,6 @@ async function bootstrap() {
   const port = appConfig.getPort();
   const appUrl = appConfig.getAppUrl();
 
-  // const port = process.env.PORT || 3000;
-  // const appUrl = process.env.APP_URL || 'http://localhost:3000/';
-
   await app.listen(port, () => console.log(`Server started ${appUrl}`));
 }
 bootstrap();
