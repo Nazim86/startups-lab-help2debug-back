@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   OneToOne,
@@ -29,6 +30,7 @@ export class Issue {
   description: string;
 
   @ManyToMany(() => Hashtag, (h) => h.issue)
+  @JoinTable()
   hashtag: Hashtag[];
 
   @OneToOne(() => Session, (s) => s.issue)

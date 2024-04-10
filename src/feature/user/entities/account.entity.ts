@@ -30,9 +30,9 @@ export class Account {
   email: string;
 
   @OneToOne(() => User, (u) => u.account)
-  @JoinColumn()
   user: User;
 
   @OneToOne(() => MentorSetting, (m) => m.account)
+  @JoinColumn()
   mentorSetting: MentorSetting;
 }

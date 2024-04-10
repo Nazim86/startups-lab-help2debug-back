@@ -13,11 +13,16 @@ export class HashtagFacade {
   repository = {
     findHashtags: (hashtags: string[]): Promise<Hashtag[]> =>
       this.findHashtags(hashtags),
+    saveHashtags: (hashtags: Hashtag[]) => this.saveHashtags(hashtags),
   };
 
   useCases = {};
 
   private findHashtags(hashtags: string[]): Promise<Hashtag[]> {
     return this.hashtagRepo.findHashtags(hashtags);
+  }
+
+  private saveHashtags(hashtags: Hashtag[]): Promise<Hashtag[]> {
+    return this.hashtagRepo.save(hashtags);
   }
 }

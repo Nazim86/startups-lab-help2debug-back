@@ -1,10 +1,4 @@
-import {
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 import { Issue } from '../../issue/entities/issue.entity';
 
@@ -20,10 +14,8 @@ export class Hashtag {
   normalized: string;
 
   @ManyToMany(() => User, (u) => u.hashtag)
-  @JoinTable()
   user: User[];
 
   @ManyToMany(() => Issue, (i) => i.hashtag)
-  @JoinTable()
   issue: Issue[];
 }
