@@ -11,21 +11,12 @@ window.onload = function() {
   "swaggerDoc": {
     "openapi": "3.0.0",
     "paths": {
-      "/user/{id}": {
+      "/user": {
         "put": {
           "operationId": "UserController_update",
-          "summary": "обновить профиль пользователя",
+          "summary": "Update user profile",
           "description": "Отправляем firstName, lastName, username*, tags[]",
-          "parameters": [
-            {
-              "name": "id",
-              "required": true,
-              "in": "path",
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
+          "parameters": [],
           "requestBody": {
             "required": true,
             "content": {
@@ -907,7 +898,14 @@ window.onload = function() {
               "maxLength": 50,
               "pattern": "A-Z; a-z; А-Я ; а-я"
             },
-            "tags": {
+            "company": {
+              "type": "string",
+              "description": "Company name",
+              "example": "IT Incubator",
+              "minLength": 1,
+              "maxLength": 50
+            },
+            "hashtags": {
               "type": "string",
               "description": "Hashtags",
               "example": "[#Nestjs,#MongoDB]",
@@ -969,7 +967,7 @@ window.onload = function() {
             "id": {
               "type": "string",
               "description": "hashtag ID",
-              "example": "6ae32cfc-9137-4997-9191-20df3cc4584a"
+              "example": "f72170dc-645e-4d1d-9076-c7d5d8dacca5"
             },
             "normalizedTag": {
               "type": "string",
@@ -1072,7 +1070,7 @@ window.onload = function() {
             "id": {
               "type": "string",
               "description": "issue ID",
-              "example": "14cb4231-beea-43ea-a24e-d12b1a7f8843"
+              "example": "251655fe-6966-41ac-ba98-085cc19e00b4"
             },
             "type": {
               "type": "string",
@@ -1107,7 +1105,7 @@ window.onload = function() {
             "issueId": {
               "type": "string",
               "description": "Issue Id",
-              "example": "6633dce7-f0c4-4b3c-b56e-4be4efa172fe"
+              "example": "d1a15735-fc72-4ce7-b50a-415c7f4859c7"
             }
           },
           "required": [
@@ -1120,17 +1118,17 @@ window.onload = function() {
             "id": {
               "type": "string",
               "description": "session Id",
-              "example": "a574d29e-d514-454a-8755-a34d53415172"
+              "example": "06cb21f9-4679-46e0-b10a-fc8eb7a76fc4"
             },
             "issueId": {
               "type": "string",
               "description": "Issue Id",
-              "example": "1fe6b36f-a5e2-489b-8850-6b5e10b802e1"
+              "example": "4a18e04e-2a48-4af8-8431-18c81f6d554d"
             },
             "code": {
               "type": "string",
               "description": "code",
-              "example": "2ca39f57-1a93-48e3-bd68-e9f8f69d3120"
+              "example": "a7632b41-7211-4d04-8c08-1bdc53814a48"
             }
           },
           "required": [
@@ -1158,12 +1156,12 @@ window.onload = function() {
             "id": {
               "type": "string",
               "description": "session Id",
-              "example": "1193ded2-0cfc-4b33-817d-5aaa4f1ac433"
+              "example": "5892fc86-d50c-4ca9-acc5-f2184944bdc1"
             },
             "issueId": {
               "type": "string",
               "description": "Issue Id",
-              "example": "633e72ee-50b5-4ca2-8c85-071fb0814305"
+              "example": "cb1a0caf-8134-4dcf-8a4e-8d41ca61dab4"
             },
             "status": {
               "type": "string",
@@ -1179,7 +1177,7 @@ window.onload = function() {
             "statusUpdateAt": {
               "type": "date",
               "description": "Status updated date",
-              "example": "2024-04-10T11:49:35.295Z"
+              "example": "2024-04-10T22:02:56.789Z"
             },
             "statusByMentor": {
               "type": "string",

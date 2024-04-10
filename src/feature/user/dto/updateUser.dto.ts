@@ -5,10 +5,14 @@ import {
   IsString,
   IsNotEmpty,
   IsOptional,
+  IsArray,
+  ArrayMaxSize,
+  ArrayMinSize,
 } from 'class-validator';
 import {
-  ERROR_LENGTH_ABOUT_ME,
+  ERROR_LENGTH_COMPANY_NAME,
   ERROR_LENGTH_FIRST_NAME,
+  ERROR_LENGTH_HASHTAGS,
   ERROR_LENGTH_LAST_NAME,
   ERROR_LENGTH_USERNAME,
 } from '../user.constants';
@@ -58,15 +62,32 @@ export class UpdateUserDto {
   lastName: string;
 
   @ApiProperty({
+    description: 'Company name',
+    type: 'string',
+    example: 'IT Incubator',
+    minLength: 1,
+    maxLength: 50,
+    // pattern: 'A-Z; a-z; А-Я ; а-я',
+    required: false,
+  })
+  //@Matches('^[a-zA-ZА-Яа-я]*$')
+  @Length(1, 50, { message: ERROR_LENGTH_COMPANY_NAME })
+  @IsString()
+  @IsNotEmpty()
+  @IsOptional()
+  company: string;
+
+  @ApiProperty({
     description: 'Hashtags',
     type: 'string',
     example: '[#Nestjs,#MongoDB]',
     minLength: 3,
     maxLength: 50,
-    required: false,
+    required: false, //TODO:Tags should be required?
   })
-  @Length(0, 200, { message: ERROR_LENGTH_ABOUT_ME })
-  @IsString()
+  @ArrayMinSize(0, { message: ERROR_LENGTH_HASHTAGS })
+  @ArrayMaxSize(50, { message: ERROR_LENGTH_HASHTAGS }) //TODO:Array length check
+  @IsArray()
   @IsOptional()
-  tags: string[];
+  hashtags: string[];
 }

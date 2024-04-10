@@ -1,51 +1,53 @@
-// import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-// import { UpdateUserDto } from '../../dto';
-// import { BadRequestError, NotFoundError, Result } from '@gateway/src/core';
-// import { UserRepository } from '../../db';
-// import {
-//   ERROR_LESS_THAN_13_YEARS_OLD,
-//   ERROR_USERNAME_IS_ALREADY_REGISTRED,
-//   USER_NOT_FOUND,
-// } from '../../user.constants';
-// import add from 'date-fns/add';
-//
-// export class UpdateUserCommand {
-//   constructor(
-//     public userId: string,
-//     public updateDto: UpdateUserDto,
-//   ) {}
-// }
-//
-// @CommandHandler(UpdateUserCommand)
-// export class UpdateUserUseCase implements ICommandHandler {
-//   constructor(private readonly userRepo: UserRepository) {}
-//
-//   async execute({ userId, updateDto }: UpdateUserCommand): Promise<Result> {
-//     const thirteenYears = add(updateDto.dateOfBirth, { years: 13 });
-//     if (thirteenYears > new Date()) {
-//       return Result.Err(
-//         new BadRequestError(ERROR_LESS_THAN_13_YEARS_OLD, 'dateOfBirth'),
-//       );
-//     }
-//
-//     const userByLogin = await this.userRepo.findByUsernameOrEmail(
-//       updateDto.username,
-//     );
-//     if (userByLogin && userByLogin.id !== userId) {
-//       return Result.Err(
-//         new BadRequestError(ERROR_USERNAME_IS_ALREADY_REGISTRED, 'username'),
-//       );
-//     }
-//
-//     const user = await this.userRepo.findById(userId);
-//     if (!user) {
-//       return Result.Err(new NotFoundError(USER_NOT_FOUND));
-//     }
-//
-//     const data = { ...updateDto, name: updateDto.username };
-//     delete data.username;
-//
-//     await this.userRepo.update(userId, data);
-//     return Result.Ok();
-//   }
-// }
+import { CommandBus, CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { UpdateUserDto } from '../../dto';
+import { UserRepository } from '../../db';
+import { USER_NOT_FOUND } from '../../user.constants';
+import { NotFoundError } from '../../../../core/config/exceptions';
+import { Result } from '../../../../core/result';
+
+import { CreateHashtagCommand } from '../../../hashtag/application/use-case/createHashtag.usecase';
+
+export class UpdateUserCommand {
+  constructor(
+    public userId: string,
+    public updateDto: UpdateUserDto,
+  ) {}
+}
+
+@CommandHandler(UpdateUserCommand)
+export class UpdateUserUseCase implements ICommandHandler {
+  constructor(
+    private readonly userRepo: UserRepository,
+    private readonly commandBus: CommandBus,
+  ) {}
+
+  async execute({ userId, updateDto }: UpdateUserCommand): Promise<Result> {
+    const user = await this.userRepo.findUserById(userId);
+
+    if (!user) {
+      return Result.Err(new NotFoundError(USER_NOT_FOUND));
+    }
+
+    //TODO: cover with transaction
+
+    const createdHashtags = await this.commandBus.execute(
+      new CreateHashtagCommand(updateDto.hashtags),
+    );
+
+    if (!createdHashtags.isSuccess) {
+      return Result.Err(createdHashtags.err);
+    }
+
+    user.username = updateDto.username;
+    user.firstName = updateDto.firstName;
+    user.lastName = updateDto.lastName;
+    user.companyName = updateDto.company;
+    user.hashtag = createdHashtags;
+
+    //TODO: Need to update issue.hashtag?
+
+    await this.userRepo.saveUser(user);
+
+    return Result.Ok(); //TODO: Need to return updated user?
+  }
+}
