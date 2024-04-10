@@ -1,15 +1,12 @@
 import { Type } from '@nestjs/common';
 import { ICommandHandler } from '@nestjs/cqrs';
 
-import { LinkProviderUserToExistingUserUseCase } from './linkProviderUserToExistingUser.usecase';
-import { Device } from '../../../device/entities/device.entity';
-import { User } from '../../entities/user.entity';
-import { Account } from '../../entities/account.entity';
+import { LinkAccountToExistingUserUseCase } from './linkAccountToExistingUserUseCase';
+import { UpdateUserUseCase } from './updateUser.usercase';
 
-export * from './linkProviderUserToExistingUser.usecase';
+export * from './linkAccountToExistingUserUseCase';
 
 export const USER_USE_CASES: Type<ICommandHandler>[] = [
-  LinkProviderUserToExistingUserUseCase,
+  LinkAccountToExistingUserUseCase,
+  UpdateUserUseCase,
 ];
-
-export const USER_ENTITIES = [User, Account];

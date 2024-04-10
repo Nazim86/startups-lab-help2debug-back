@@ -39,8 +39,15 @@ export const ERROR_LENGTH_FIRST_NAME = `
 export const ERROR_LENGTH_LAST_NAME = `
 {Minimum number of characters 1}
 {Maximum number of characters 50}`;
+export const ERROR_LENGTH_COMPANY_NAME = `
+{Minimum number of characters 1}
+{Maximum number of characters 50}`;
 
 export const ERROR_LENGTH_ABOUT_ME = `
+{Minimum number of characters 0}
+{Maximum number of characters 200}`;
+
+export const ERROR_LENGTH_HASHTAGS = `
 {Minimum number of characters 0}
 {Maximum number of characters 200}`;
 

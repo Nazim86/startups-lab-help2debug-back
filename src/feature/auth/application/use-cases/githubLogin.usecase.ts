@@ -11,7 +11,7 @@ import {
   ERROR_GITHUB_OAUTH_TOKENS,
   ERROR_PROVIDER_AUTHORIZATION_CODE,
 } from '../../../device/device.constants';
-import { ProviderUserResponse } from '../../response';
+import { AccountResponse } from '../../response';
 import { GitHubOauthToken } from '../../../device/types';
 import { GitHubOauth2Config } from '../../../device/config';
 import { Result } from '../../../../core/result';
@@ -43,7 +43,7 @@ export class GitHubLoginUseCase
     this.settingsOauth2 = githubOauth2Config.getSettings();
   }
 
-  async getProviderUser(code: string): Promise<Result<ProviderUserResponse>> {
+  async getProviderUser(code: string): Promise<Result<AccountResponse>> {
     if (!code) {
       return Result.Err(
         new UnauthorizedError(ERROR_PROVIDER_AUTHORIZATION_CODE),
@@ -66,12 +66,10 @@ export class GitHubLoginUseCase
     if (!resultGitHubUserInfo.isSuccess) {
       return Result.Err(resultOauthTokens.err);
     }
-    console.log(resultGitHubUserInfo);
     const resultGitHubUserEmails = await this.getGitHubUser(
       access_token,
       this.settingsOauth2.userEmailsInfo,
     );
-    console.log(resultGitHubUserEmails);
     let email;
 
     for (const userEmail of resultGitHubUserEmails.value) {
@@ -84,10 +82,11 @@ export class GitHubLoginUseCase
       return Result.Err(new ForbiddenError(ERROR_GITHUB_ACCOUNT_NOT_VERIFIED));
     }
 
-    const { id, username } = resultGitHubUserInfo.value;
+    const { id, login } = resultGitHubUserInfo.value;
 
-    return Result.Ok({ id: id.toString(), username, email });
+    return Result.Ok({ id: id.toString(), username: login, email });
   }
+  x;
 
   private async getGitHubOauthToken(
     code: string,

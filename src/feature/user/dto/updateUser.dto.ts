@@ -5,15 +5,17 @@ import {
   IsString,
   IsNotEmpty,
   IsOptional,
-  IsDate,
+  IsArray,
+  ArrayMaxSize,
+  ArrayMinSize,
 } from 'class-validator';
 import {
-  ERROR_LENGTH_ABOUT_ME,
+  ERROR_LENGTH_COMPANY_NAME,
   ERROR_LENGTH_FIRST_NAME,
+  ERROR_LENGTH_HASHTAGS,
   ERROR_LENGTH_LAST_NAME,
   ERROR_LENGTH_USERNAME,
 } from '../user.constants';
-import { Type } from 'class-transformer';
 
 export class UpdateUserDto {
   @ApiProperty({
@@ -23,6 +25,7 @@ export class UpdateUserDto {
     minLength: 6,
     maxLength: 30,
     pattern: '0-9; A-Z; a-z; _ ; -',
+    required: true,
   })
   @Matches('^[a-zA-Z0-9_-]*$')
   @Length(6, 30, { message: ERROR_LENGTH_USERNAME })
@@ -59,46 +62,32 @@ export class UpdateUserDto {
   lastName: string;
 
   @ApiProperty({
-    description: 'Date of birth',
-    type: 'date',
-    example: '2023-12-25T00:00:00.000Z',
+    description: 'Company name',
+    type: 'string',
+    example: 'IT Incubator',
+    minLength: 1,
+    maxLength: 50,
+    // pattern: 'A-Z; a-z; А-Я ; а-я',
     required: false,
   })
-  @IsDate()
-  @Type(() => Date)
+  //@Matches('^[a-zA-ZА-Яа-я]*$')
+  @Length(1, 50, { message: ERROR_LENGTH_COMPANY_NAME })
+  @IsString()
+  @IsNotEmpty()
   @IsOptional()
-  dateOfBirth: Date;
+  company: string;
 
   @ApiProperty({
-    description: 'Country',
+    description: 'Hashtags',
     type: 'string',
-    example: 'Russia',
-    required: false,
+    example: '[#Nestjs,#MongoDB]',
+    minLength: 3,
+    maxLength: 50,
+    required: false, //TODO:Tags should be required?
   })
-  @IsString()
+  @ArrayMinSize(0, { message: ERROR_LENGTH_HASHTAGS })
+  @ArrayMaxSize(50, { message: ERROR_LENGTH_HASHTAGS }) //TODO:Array length check
+  @IsArray()
   @IsOptional()
-  country: string;
-
-  @ApiProperty({
-    description: 'City',
-    type: 'string',
-    example: 'Moscow',
-    required: false,
-  })
-  @IsString()
-  @IsOptional()
-  city: string;
-
-  @ApiProperty({
-    description: 'About me',
-    type: 'string',
-    example: 'backend developer',
-    minLength: 0,
-    maxLength: 200,
-    required: false,
-  })
-  @Length(0, 200, { message: ERROR_LENGTH_ABOUT_ME })
-  @IsString()
-  @IsOptional()
-  aboutMe: string;
+  hashtags: string[];
 }
