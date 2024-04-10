@@ -45,7 +45,7 @@ export class UserRepository {
     return this.userRepo.findOne({ where: { id: userId } });
   }
 
-  async updateUserProviderByProviderId(
+  async updateAccountByProviderId(
     params: UpdateUserProviderByProviderIdParams,
     data: UpdateUserProviderByProviderIdData,
   ) {

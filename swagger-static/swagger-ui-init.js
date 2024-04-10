@@ -185,6 +185,20 @@ window.onload = function() {
           ]
         }
       },
+      "/mentor-setting": {
+        "post": {
+          "operationId": "MentorSettingController_createMentorSetting",
+          "parameters": [],
+          "responses": {
+            "201": {
+              "description": ""
+            }
+          },
+          "tags": [
+            "Mentor Settings"
+          ]
+        }
+      },
       "/mentor-setting/{id}": {
         "put": {
           "operationId": "MentorSettingController_update",
@@ -955,7 +969,7 @@ window.onload = function() {
             "id": {
               "type": "string",
               "description": "hashtag ID",
-              "example": "529862d8-7335-41ee-9a15-32e002741380"
+              "example": "6ae32cfc-9137-4997-9191-20df3cc4584a"
             },
             "normalizedTag": {
               "type": "string",
@@ -1058,7 +1072,7 @@ window.onload = function() {
             "id": {
               "type": "string",
               "description": "issue ID",
-              "example": "859be2b0-174e-47ad-8a5e-858405377ba4"
+              "example": "14cb4231-beea-43ea-a24e-d12b1a7f8843"
             },
             "type": {
               "type": "string",
@@ -1093,7 +1107,7 @@ window.onload = function() {
             "issueId": {
               "type": "string",
               "description": "Issue Id",
-              "example": "15eddae7-0fa0-4a5d-9eb4-355ee5f7a273"
+              "example": "6633dce7-f0c4-4b3c-b56e-4be4efa172fe"
             }
           },
           "required": [
@@ -1106,17 +1120,17 @@ window.onload = function() {
             "id": {
               "type": "string",
               "description": "session Id",
-              "example": "194437f2-c68d-4d93-8af4-d58d519e293e"
+              "example": "a574d29e-d514-454a-8755-a34d53415172"
             },
             "issueId": {
               "type": "string",
               "description": "Issue Id",
-              "example": "86129e60-50d5-470f-bf64-982e41f828ca"
+              "example": "1fe6b36f-a5e2-489b-8850-6b5e10b802e1"
             },
             "code": {
               "type": "string",
               "description": "code",
-              "example": "cd318c33-400f-482c-82b9-49803b76812b"
+              "example": "2ca39f57-1a93-48e3-bd68-e9f8f69d3120"
             }
           },
           "required": [
@@ -1144,12 +1158,12 @@ window.onload = function() {
             "id": {
               "type": "string",
               "description": "session Id",
-              "example": "02f4126a-df72-406e-82a7-38dab26a2fbc"
+              "example": "1193ded2-0cfc-4b33-817d-5aaa4f1ac433"
             },
             "issueId": {
               "type": "string",
               "description": "Issue Id",
-              "example": "ce49bcbf-ea15-455e-acc2-119dd2957404"
+              "example": "633e72ee-50b5-4ca2-8c85-071fb0814305"
             },
             "status": {
               "type": "string",
@@ -1165,7 +1179,7 @@ window.onload = function() {
             "statusUpdateAt": {
               "type": "date",
               "description": "Status updated date",
-              "example": "2024-04-09T06:54:55.690Z"
+              "example": "2024-04-10T11:49:35.295Z"
             },
             "statusByMentor": {
               "type": "string",

@@ -6,8 +6,8 @@ import {
   UpdateUserProviderByProviderIdParams,
 } from './types';
 import { Result } from '../../core/result';
-import { ProviderUserResponse } from '../auth/response';
-import { LinkProviderUserToExistingUserCommand } from './application/use-cases';
+import { AccountResponse } from '../auth/response';
+import { LinkAccountToExistingUserCommand } from './application/use-cases';
 import { Provider } from './entities/account.enum';
 
 @Injectable()
@@ -18,14 +18,12 @@ export class UserFacade {
   ) {}
 
   repository = {
-    findUserProviderByProviderId: (
-      providerUserId: string,
-      provider: Provider,
-    ) => this.findUserProviderByProviderId(providerUserId, provider),
-    updateUserProviderByProviderId: (
+    findAccountByProviderId: (providerUserId: string, provider: Provider) =>
+      this.findUserProviderByProviderId(providerUserId, provider),
+    updateAccountByProviderId: (
       params: UpdateUserProviderByProviderIdParams,
       data: UpdateUserProviderByProviderIdData,
-    ) => this.updateUserProviderByProviderId(params, data),
+    ) => this.updateAccountByProviderId(params, data),
     findUserById: (userId: string) => this.findUserById(userId),
   };
 
@@ -33,11 +31,11 @@ export class UserFacade {
     // createUser: (userDto: CreateUserDto) => this.createUser(userDto),
     // checkUserCredentials: (loginDto: LoginDto): Promise<Result<UserId>> =>
     //   this.checkUserCredentials(loginDto),
-    linkProviderUserToExistingUser: (
+    linkAccountToExistingUser: (
       provider: Provider,
-      userData: ProviderUserResponse,
+      userData: AccountResponse,
     ): Promise<Result<string>> =>
-      this.linkProviderUserToExistingUser(provider, userData),
+      this.linkAccountToExistingUser(provider, userData),
   };
   //queries = { getUserViewById: (id: string) => this.getUserViewById(id) };
 
@@ -64,21 +62,21 @@ export class UserFacade {
     return this.userRepo.findUserProviderByProviderId(providerUserId, provider);
   }
 
-  private async updateUserProviderByProviderId(
+  private async updateAccountByProviderId(
     params: UpdateUserProviderByProviderIdParams,
     data: UpdateUserProviderByProviderIdData,
   ) {
-    return this.userRepo.updateUserProviderByProviderId(params, data);
+    return this.userRepo.updateAccountByProviderId(params, data);
   }
 
-  private async linkProviderUserToExistingUser(
+  private async linkAccountToExistingUser(
     provider: Provider,
-    userData: ProviderUserResponse,
+    userData: AccountResponse,
   ): Promise<Result<string>> {
     return this.commandBus.execute<
-      LinkProviderUserToExistingUserCommand,
+      LinkAccountToExistingUserCommand,
       Result<string>
-    >(new LinkProviderUserToExistingUserCommand(provider, userData));
+    >(new LinkAccountToExistingUserCommand(provider, userData));
   }
 
   private async findUserById(userId: string) {

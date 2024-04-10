@@ -1,1 +1,1 @@
-export * from './providerUserResponse';
+export * from './accountResponse';

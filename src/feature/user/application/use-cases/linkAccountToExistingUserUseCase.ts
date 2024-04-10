@@ -1,28 +1,28 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UserRepository } from '../../db';
-import { ProviderUserResponse } from '../../../auth/response';
+import { AccountResponse } from '../../../auth/response';
 import { User } from '../../entities/user.entity';
 import { Account } from '../../entities/account.entity';
 import { Provider } from '../../entities/account.enum';
 import { Result } from '../../../../core/result';
 
-export class LinkProviderUserToExistingUserCommand {
+export class LinkAccountToExistingUserCommand {
   constructor(
     public provider: Provider,
-    public userData: ProviderUserResponse,
+    public userData: AccountResponse,
   ) {}
 }
 
-@CommandHandler(LinkProviderUserToExistingUserCommand)
-export class LinkProviderUserToExistingUserUseCase
-  implements ICommandHandler<LinkProviderUserToExistingUserCommand>
+@CommandHandler(LinkAccountToExistingUserCommand)
+export class LinkAccountToExistingUserUseCase
+  implements ICommandHandler<LinkAccountToExistingUserCommand>
 {
   constructor(private readonly userRepo: UserRepository) {}
 
   async execute({
     provider,
     userData,
-  }: LinkProviderUserToExistingUserCommand): Promise<Result<string>> {
+  }: LinkAccountToExistingUserCommand): Promise<Result<string>> {
     let userByEmail = await this.userRepo.findByUsernameOrEmail(userData.email);
 
     if (!userByEmail) {
@@ -33,52 +33,48 @@ export class LinkProviderUserToExistingUserUseCase
 
     let userId: string;
     if (!userByEmail) {
-      const createdUser = await this.createUserWithProviderUser(
-        provider,
-        userData,
-      );
+      const createdUser = await this.createUserWithAccount(provider, userData);
       userId = createdUser.id;
     } else {
-      await this.linkProviderUserToExistingUser(
-        userByEmail,
-        provider,
-        userData,
-      );
+      await this.linkAccountToExistingUser(userByEmail, provider, userData);
       userId = userByEmail.id;
     }
 
     return Result.Ok<string>(userId);
   }
 
-  private async createUserWithProviderUser(
+  private async createUserWithAccount(
     provider: Provider,
-    userData: ProviderUserResponse,
+    userData: AccountResponse,
   ) {
-    const numberClientUsers = await this.userRepo.numberClientUsers();
-    const username = `client${numberClientUsers + 1}`;
+    const username = userData.username;
+    const email = userData.email;
+
+    // const numberClientUsers = await this.userRepo.numberClientUsers();
+    // //const username = `client${numberClientUsers + 1}`;
 
     //TODO: need transaction here
 
     const user = new User();
     user.username = username;
-    user.email = userData.email;
+    user.email = email;
     const newUser = await this.userRepo.saveUser(user);
 
-    // Create Provider
+    // Create Account
     const account = new Account();
     account.provider = provider;
-    account.username = userData.username;
-    account.email = userData.email;
+    account.username = username;
+    account.email = email;
     account.user = newUser;
     await this.userRepo.saveAccount(account);
 
     return user;
   }
 
-  private async linkProviderUserToExistingUser(
+  private async linkAccountToExistingUser(
     user: User,
     provider: Provider,
-    userData: ProviderUserResponse,
+    userData: AccountResponse,
   ) {
     const account = new Account();
     account.provider = provider;

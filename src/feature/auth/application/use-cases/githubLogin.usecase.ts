@@ -11,7 +11,7 @@ import {
   ERROR_GITHUB_OAUTH_TOKENS,
   ERROR_PROVIDER_AUTHORIZATION_CODE,
 } from '../../../device/device.constants';
-import { ProviderUserResponse } from '../../response';
+import { AccountResponse } from '../../response';
 import { GitHubOauthToken } from '../../../device/types';
 import { GitHubOauth2Config } from '../../../device/config';
 import { Result } from '../../../../core/result';
@@ -43,7 +43,7 @@ export class GitHubLoginUseCase
     this.settingsOauth2 = githubOauth2Config.getSettings();
   }
 
-  async getProviderUser(code: string): Promise<Result<ProviderUserResponse>> {
+  async getProviderUser(code: string): Promise<Result<AccountResponse>> {
     if (!code) {
       return Result.Err(
         new UnauthorizedError(ERROR_PROVIDER_AUTHORIZATION_CODE),

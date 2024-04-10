@@ -1,10 +1,10 @@
 import { Type } from '@nestjs/common';
 import { ICommandHandler } from '@nestjs/cqrs';
 
-import { LinkProviderUserToExistingUserUseCase } from './linkProviderUserToExistingUser.usecase';
+import { LinkAccountToExistingUserUseCase } from './linkAccountToExistingUserUseCase';
 
-export * from './linkProviderUserToExistingUser.usecase';
+export * from './linkAccountToExistingUserUseCase';
 
 export const USER_USE_CASES: Type<ICommandHandler>[] = [
-  LinkProviderUserToExistingUserUseCase,
+  LinkAccountToExistingUserUseCase,
 ];

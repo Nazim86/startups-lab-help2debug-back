@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Put } from '@nestjs/common';
+import { Body, Controller, Param, Post, Put } from '@nestjs/common';
 import { MentorSettingService } from './mentor-setting.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UpdateMentorSettingDto } from './dto/updateMentorSettingDto';
@@ -9,6 +9,8 @@ import { UpdateMentorSettingSwaggerDecorator } from '../../core/swagger/mentor-s
 export class MentorSettingController {
   constructor(private readonly mentorSettingService: MentorSettingService) {}
 
+  @Post()
+  async createMentorSetting() {} // @Body() createMentorSettingDto: CreateMentorSettingDto,
   @ApiOperation({
     summary: 'обновить менторские настройки',
     description:
