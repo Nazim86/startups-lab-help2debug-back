@@ -1,7 +1,6 @@
 import { CreateIssueDto } from '../../dto/createIssue.dto';
 import { UserFacade } from '../../../user/user.facade';
 import { CommandBus, CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { HashtagFacade } from '../../../hashtag/hashtag.facade';
 import { IssueRepository } from '../../db/issue.repository';
 import { Result } from '../../../../core/result';
 import { Issue } from '../../entities/issue.entity';
@@ -19,7 +18,6 @@ export class CreateIssueUseCase implements ICommandHandler<CreateIssueCommand> {
   constructor(
     private readonly userFacade: UserFacade,
     private readonly commandBus: CommandBus,
-    private readonly hashtagFacade: HashtagFacade,
     private readonly issueRepo: IssueRepository,
   ) {}
 
@@ -40,6 +38,8 @@ export class CreateIssueUseCase implements ICommandHandler<CreateIssueCommand> {
     newIssue.description = createIssueDto.description;
     newIssue.user = user;
     newIssue.hashtag = createdHashtags;
+
+    //TODO: DO I need to get user entity and update hashtags there
 
     const created = await this.issueRepo.saveIssue(newIssue);
     return Result.Ok(created);
