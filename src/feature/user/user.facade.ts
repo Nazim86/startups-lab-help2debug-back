@@ -19,7 +19,7 @@ export class UserFacade {
 
   repository = {
     findAccountByProviderId: (providerUserId: string, provider: Provider) =>
-      this.findUserProviderByProviderId(providerUserId, provider),
+      this.findAccountByProviderId(providerUserId, provider),
     updateAccountByProviderId: (
       params: UpdateUserProviderByProviderIdParams,
       data: UpdateUserProviderByProviderIdData,
@@ -55,11 +55,11 @@ export class UserFacade {
   //   return this.userQueryRepo.getUserView(id);
   // }
 
-  private async findUserProviderByProviderId(
+  private async findAccountByProviderId(
     providerUserId: string,
     provider: Provider,
   ) {
-    return this.userRepo.findUserProviderByProviderId(providerUserId, provider);
+    return this.userRepo.findAccountByProviderId(providerUserId, provider);
   }
 
   private async updateAccountByProviderId(

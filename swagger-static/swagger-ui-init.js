@@ -1122,7 +1122,7 @@ window.onload = function() {
             "id": {
               "type": "string",
               "description": "issue ID",
-              "example": "d8aa5784-5bb2-4e41-a238-37a469a28cc7"
+              "example": "bf5bb303-2283-4e7a-a8f3-13f433e8f24e"
             },
             "type": {
               "type": "string",
@@ -1157,7 +1157,7 @@ window.onload = function() {
             "issueId": {
               "type": "string",
               "description": "Issue Id",
-              "example": "1f8a153e-ba58-4561-ad7a-3188d2156f73"
+              "example": "c7736773-212e-46f6-8c5b-184659507c6f"
             }
           },
           "required": [
@@ -1170,17 +1170,17 @@ window.onload = function() {
             "id": {
               "type": "string",
               "description": "session Id",
-              "example": "2b5cfe00-1fd6-468f-b27c-33455334da6d"
+              "example": "7e6de715-2342-465c-9ede-d0dabdb36399"
             },
             "issueId": {
               "type": "string",
               "description": "Issue Id",
-              "example": "9209fd5b-f0d3-4825-b25f-4b9553f9d720"
+              "example": "642458fc-a995-483f-8227-87646d26da17"
             },
             "code": {
               "type": "string",
               "description": "code",
-              "example": "372460fd-bded-4872-b692-ba0f7c7e2473"
+              "example": "be78c0bf-8904-40ea-9728-a6e895f7cbff"
             }
           },
           "required": [
@@ -1208,12 +1208,12 @@ window.onload = function() {
             "id": {
               "type": "string",
               "description": "session Id",
-              "example": "9d65ab88-d93d-4c38-b3cf-751212b35d4f"
+              "example": "c2101b22-af54-482b-ab44-a17f4b586dbf"
             },
             "issueId": {
               "type": "string",
               "description": "Issue Id",
-              "example": "56d927c6-be1b-46e2-95e7-052179d234a3"
+              "example": "e11d5cbf-db8a-472a-94a4-d999a5b0ea36"
             },
             "status": {
               "type": "string",
@@ -1229,7 +1229,7 @@ window.onload = function() {
             "statusUpdateAt": {
               "type": "date",
               "description": "Status updated date",
-              "example": "2024-04-11T21:52:05.501Z"
+              "example": "2024-04-11T22:33:36.130Z"
             },
             "statusByMentor": {
               "type": "string",

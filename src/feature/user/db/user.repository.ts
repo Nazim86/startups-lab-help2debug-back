@@ -32,10 +32,7 @@ export class UserRepository {
     });
   }
 
-  async findUserProviderByProviderId(
-    providerUserId: string,
-    provider: Provider,
-  ) {
+  async findAccountByProviderId(providerUserId: string, provider: Provider) {
     return this.accountRepo.findOne({
       where: { providerUserId, provider },
     });
