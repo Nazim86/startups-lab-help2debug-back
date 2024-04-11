@@ -13,6 +13,7 @@ import { Device } from '../../device/entities';
 import { Hashtag } from '../../hashtag/entities/hashtag.entity';
 import { Session } from '../../session/entities/session.entity';
 import { Issue } from '../../issue/entities/issue.entity';
+import { Tier } from '../enum/tier.enum';
 
 @Entity()
 export class User {
@@ -33,6 +34,12 @@ export class User {
 
   @Column({ type: 'varchar', nullable: true })
   companyName: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  tier: Tier;
+
+  @Column({ type: 'bigint', nullable: true })
+  coins: number;
 
   @OneToOne(() => Account, (a) => a.user)
   @JoinColumn()

@@ -1,4 +1,4 @@
-import { LoginProviderDto } from '../../dto/loginProvider.dto';
+import { LoginProviderDto } from '../../dto';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { BaseProvideLoginUseCase } from './baseProviderLogin.usecase';
 import { Logger } from '@nestjs/common';
@@ -18,7 +18,7 @@ import { Result } from '../../../../core/result';
 import { HttpService } from '@nestjs/axios';
 import { UserFacade } from '../../../user/user.facade';
 import { DeviceFacade } from '../../../device/device.facade';
-import { Provider } from '../../../user/entities/account.enum';
+import { Provider } from '../../../user/enum/account.enum';
 
 export class GitHubLoginCommand {
   constructor(public providerDto: LoginProviderDto) {}
@@ -73,7 +73,7 @@ export class GitHubLoginUseCase
     let email;
 
     for (const userEmail of resultGitHubUserEmails.value) {
-      if (userEmail.primary & userEmail.verified) {
+      if (userEmail.primary && userEmail.verified) {
         email = userEmail.email;
       }
     }

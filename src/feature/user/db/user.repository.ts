@@ -8,7 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ILike, Repository } from 'typeorm';
 import { Account } from '../entities/account.entity';
 import { User } from '../entities/user.entity';
-import { Provider } from '../entities/account.enum';
+import { Provider } from '../enum/account.enum';
 
 @Injectable()
 export class UserRepository {

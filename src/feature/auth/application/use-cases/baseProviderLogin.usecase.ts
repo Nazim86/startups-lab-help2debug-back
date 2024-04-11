@@ -3,7 +3,7 @@ import { LoginProviderDto } from '../../dto';
 import { AccountResponse } from '../../response';
 import { CreateTokensType } from '../../../device/types/createTokens.type';
 import { UserFacade } from '../../../user/user.facade';
-import { Provider } from '../../../user/entities/account.enum';
+import { Provider } from '../../../user/enum/account.enum';
 import { DeviceFacade } from '../../../device/device.facade';
 
 export abstract class BaseProvideLoginUseCase {

@@ -5,7 +5,7 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Provider } from './account.enum';
+import { Provider } from '../enum/account.enum';
 import { User } from './user.entity';
 import { MentorSetting } from '../../mentor-setting/entities/mentorSetting.entity';
 

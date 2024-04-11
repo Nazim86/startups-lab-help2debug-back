@@ -3,7 +3,7 @@ import { UserRepository } from '../../db';
 import { AccountResponse } from '../../../auth/response';
 import { User } from '../../entities/user.entity';
 import { Account } from '../../entities/account.entity';
-import { Provider } from '../../entities/account.enum';
+import { Provider } from '../../enum/account.enum';
 import { Result } from '../../../../core/result';
 
 export class LinkAccountToExistingUserCommand {

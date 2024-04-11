@@ -8,7 +8,7 @@ import {
 import { Result } from '../../core/result';
 import { AccountResponse } from '../auth/response';
 import { LinkAccountToExistingUserCommand } from './application/use-cases';
-import { Provider } from './entities/account.enum';
+import { Provider } from './enum/account.enum';
 
 @Injectable()
 export class UserFacade {
