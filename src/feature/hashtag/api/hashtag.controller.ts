@@ -1,8 +1,12 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { HashtagService } from '../hashtag.service';
-import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { ResponseHashtagDto } from '../responses';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+
 import { HashtagQueryDto } from '../dto/hashtagQuery.dto';
+import { Hashtag } from '../entities/hashtag.entity';
+import { PageDto } from '../../../core/dtos';
+import { ApiPaginatedResponse } from '../../../core/swagger/pagination';
+import { CreateHashtagDto } from '../dto/createHashtag.dto';
 
 @ApiTags('Hashtag')
 @Controller('hashtag')
@@ -13,9 +17,12 @@ export class HashtagController {
     summary: 'Получить все теги (топ 10)',
     description: 'по term',
   })
-  @ApiOkResponse({ type: ResponseHashtagDto, isArray: true })
+  //@ApiOkResponse({ type: ResponseHashtagDto, isArray: true })
+  @ApiPaginatedResponse(CreateHashtagDto)
   @Get()
-  getTagsForSuggestion(@Query() query: HashtagQueryDto) {
-    return this.hashtagService.findAll();
+  getTagsForSuggestion(
+    @Query() pageOptionsDto: HashtagQueryDto,
+  ): Promise<PageDto<Hashtag>> {
+    return this.hashtagService.findAll(pageOptionsDto);
   }
 }

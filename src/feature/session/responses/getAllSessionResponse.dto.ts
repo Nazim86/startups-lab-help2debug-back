@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { SessionStatus } from '../types/sessionStatus.enum';
 import { StatusByParticipant } from '../types/statusByParticipant.enum';
 import { IssueResponseDto } from '../../issue/responses';
-import { ResponseHashtagDto } from '../../hashtag/responses';
+import { CreateHashtagDto } from '../../hashtag/dto/createHashtag.dto';
 
 export class AllSessionResponseDto {
   @ApiProperty({
@@ -60,9 +60,9 @@ export class AllSessionResponseDto {
 
   @ApiProperty({
     description: 'Hashtag',
-    type: ResponseHashtagDto,
-    example: ResponseHashtagDto,
+    type: CreateHashtagDto,
+    example: CreateHashtagDto,
     required: false,
   })
-  tag: ResponseHashtagDto;
+  hashtag: CreateHashtagDto;
 }

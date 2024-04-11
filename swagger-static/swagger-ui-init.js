@@ -68,41 +68,25 @@ window.onload = function() {
           "description": "по term",
           "parameters": [
             {
-              "name": "searchTitleTerm",
+              "name": "order",
               "required": false,
               "in": "query",
-              "description": "Search tag by title",
               "schema": {
+                "default": "ASC",
+                "enum": [
+                  "ASC",
+                  "DESC"
+                ],
                 "type": "string"
               }
             },
             {
-              "name": "sortDirection",
+              "name": "page",
               "required": false,
               "in": "query",
-              "description": "Sorting direction",
               "schema": {
-                "default": "desc",
-                "type": "string"
-              }
-            },
-            {
-              "name": "sortField",
-              "required": false,
-              "in": "query",
-              "description": "Sorting item",
-              "schema": {
-                "default": "score",
-                "type": "string"
-              }
-            },
-            {
-              "name": "skip",
-              "required": false,
-              "in": "query",
-              "description": "Number of items to skip",
-              "schema": {
-                "default": 0,
+                "minimum": 1,
+                "default": 1,
                 "type": "number"
               }
             },
@@ -110,23 +94,43 @@ window.onload = function() {
               "name": "take",
               "required": false,
               "in": "query",
-              "description": "Number of items to take",
               "schema": {
+                "minimum": 1,
+                "maximum": 50,
                 "default": 10,
                 "type": "number"
+              }
+            },
+            {
+              "name": "searchTitleTerm",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
               }
             }
           ],
           "responses": {
             "200": {
-              "description": "",
+              "description": "Successfully received model list",
               "content": {
                 "application/json": {
                   "schema": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/ResponseHashtagDto"
-                    }
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/PageDto"
+                      },
+                      {
+                        "properties": {
+                          "data": {
+                            "type": "array",
+                            "items": {
+                              "$ref": "#/components/schemas/CreateHashtagDto"
+                            }
+                          }
+                        }
+                      }
+                    ]
                   }
                 }
               }
@@ -961,22 +965,70 @@ window.onload = function() {
             "message"
           ]
         },
-        "ResponseHashtagDto": {
+        "PageMetaDto": {
           "type": "object",
           "properties": {
-            "id": {
-              "type": "string",
-              "description": "hashtag ID",
-              "example": "f72170dc-645e-4d1d-9076-c7d5d8dacca5"
+            "page": {
+              "type": "number"
             },
-            "normalizedTag": {
-              "type": "string",
-              "description": "Normalized tag"
+            "take": {
+              "type": "number"
+            },
+            "itemCount": {
+              "type": "number"
+            },
+            "pageCount": {
+              "type": "number"
+            },
+            "hasPreviousPage": {
+              "type": "boolean"
+            },
+            "hasNextPage": {
+              "type": "boolean"
             }
           },
           "required": [
-            "id",
-            "normalizedTag"
+            "page",
+            "take",
+            "itemCount",
+            "pageCount",
+            "hasPreviousPage",
+            "hasNextPage"
+          ]
+        },
+        "PageDto": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "array",
+              "items": {
+                "type": "array"
+              }
+            },
+            "meta": {
+              "$ref": "#/components/schemas/PageMetaDto"
+            }
+          },
+          "required": [
+            "data",
+            "meta"
+          ]
+        },
+        "CreateHashtagDto": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Hashtag title"
+            },
+            "normalized": {
+              "type": "string",
+              "description": "Hashtag normalized"
+            }
+          },
+          "required": [
+            "title",
+            "normalized"
           ]
         },
         "ResponseAccessTokenDto": {
@@ -1070,7 +1122,7 @@ window.onload = function() {
             "id": {
               "type": "string",
               "description": "issue ID",
-              "example": "251655fe-6966-41ac-ba98-085cc19e00b4"
+              "example": "a9cabbc3-426b-46e7-a2d4-34a0401f89d2"
             },
             "type": {
               "type": "string",
@@ -1105,7 +1157,7 @@ window.onload = function() {
             "issueId": {
               "type": "string",
               "description": "Issue Id",
-              "example": "d1a15735-fc72-4ce7-b50a-415c7f4859c7"
+              "example": "43e7d19a-84d4-4003-99bf-7930877eec61"
             }
           },
           "required": [
@@ -1118,17 +1170,17 @@ window.onload = function() {
             "id": {
               "type": "string",
               "description": "session Id",
-              "example": "06cb21f9-4679-46e0-b10a-fc8eb7a76fc4"
+              "example": "4df7d39d-8a80-4e4b-aaa9-077ef8366f20"
             },
             "issueId": {
               "type": "string",
               "description": "Issue Id",
-              "example": "4a18e04e-2a48-4af8-8431-18c81f6d554d"
+              "example": "7ef94161-885b-4a53-a82f-7be92a9c86b0"
             },
             "code": {
               "type": "string",
               "description": "code",
-              "example": "a7632b41-7211-4d04-8c08-1bdc53814a48"
+              "example": "ea7be45c-2468-4ca5-bd8d-e7bea7a20bfb"
             }
           },
           "required": [
@@ -1156,12 +1208,12 @@ window.onload = function() {
             "id": {
               "type": "string",
               "description": "session Id",
-              "example": "5892fc86-d50c-4ca9-acc5-f2184944bdc1"
+              "example": "da974494-83d0-4ab0-ae5f-8aa2749c4d87"
             },
             "issueId": {
               "type": "string",
               "description": "Issue Id",
-              "example": "cb1a0caf-8134-4dcf-8a4e-8d41ca61dab4"
+              "example": "3c390bd2-456a-4c28-a9b9-1bd20f517124"
             },
             "status": {
               "type": "string",
@@ -1177,7 +1229,7 @@ window.onload = function() {
             "statusUpdateAt": {
               "type": "date",
               "description": "Status updated date",
-              "example": "2024-04-10T22:02:56.789Z"
+              "example": "2024-04-11T08:08:56.383Z"
             },
             "statusByMentor": {
               "type": "string",
@@ -1205,13 +1257,13 @@ window.onload = function() {
                 }
               ]
             },
-            "tag": {
+            "hashtag": {
               "description": "Hashtag",
-              "example": class ResponseHashtagDto {
+              "example": class CreateHashtagDto {
 },
               "allOf": [
                 {
-                  "$ref": "#/components/schemas/ResponseHashtagDto"
+                  "$ref": "#/components/schemas/CreateHashtagDto"
                 }
               ]
             }
