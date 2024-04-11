@@ -36,9 +36,6 @@ export class CreateHashtagUseCase
 
     //TODO: cover with transaction
 
-    //TODO: DO I need update (push new) hashtag title if existing hashtag title does not match with user entered? If yes
-    // then I need to check each title oneByOne and push the ones does not exist
-
     if (
       foundHashtags.length &&
       foundHashtags.length !== normalizedHashtags.length

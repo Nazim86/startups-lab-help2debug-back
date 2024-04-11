@@ -26,7 +26,7 @@ export class JwtAdapter {
     return this.jwtService.signAsync(
       { userId },
       {
-        expiresIn: '1000 seconds', //TODO: change back to 1000
+        expiresIn: '1000000000 seconds', //TODO: change back to 1000
         secret: this.jwtConfig.accessJwtSecret,
       },
     );

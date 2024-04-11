@@ -16,8 +16,10 @@ import { AccessTokenGuard } from '../../auth/guards/accessJwt.guard';
 import { CommandBus } from '@nestjs/cqrs';
 import { CreateIssueCommand } from '../application/use-cases';
 import { CurrentUserId } from '../../../core/decorators/currentUserId.decorator';
+import { UpdateIssueCommand } from '../application/use-cases/updateIssue.usecase';
 
 @ApiTags('Issues')
+@UseGuards(AccessTokenGuard)
 @Controller('issue')
 export class IssueController {
   constructor(private readonly commandBus: CommandBus) {}
@@ -28,7 +30,6 @@ export class IssueController {
       'Пользователь может создать Запрос, который он хочет удовлетворить: {type, title, description, hashtags }',
   })
   @CreateIssueSwaggerDecorator()
-  @UseGuards(AccessTokenGuard)
   @Post()
   async create(
     @Body() createIssueDto: CreateIssueDto,
@@ -42,7 +43,7 @@ export class IssueController {
       throw resultCreated.err;
     }
 
-    return resultCreated;
+    return resultCreated.value;
   }
 
   @ApiOperation({
@@ -52,8 +53,19 @@ export class IssueController {
   })
   @UpdateIssueSwaggerDecorator()
   @Put(':id')
-  update(@Body() updateIssueDto: CreateIssueDto): string {
-    return 'update the issue';
+  async update(
+    @CurrentUserId() userId: string,
+    @Param('id') issueId: string,
+    @Body() updateIssueDto: CreateIssueDto,
+  ) {
+    const updateResult = await this.commandBus.execute(
+      new UpdateIssueCommand(updateIssueDto, userId, issueId),
+    );
+
+    if (!updateResult.isSuccess) {
+      throw updateResult.err;
+    }
+    return;
   }
 
   @ApiOperation({

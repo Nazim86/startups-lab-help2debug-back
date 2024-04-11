@@ -309,7 +309,16 @@ window.onload = function() {
           "operationId": "IssueController_update",
           "summary": "Update issue",
           "description": "Пользователь может обновить Запрос, которые он хочет удовлетворить: {type, title, description, hashtags }",
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
           "requestBody": {
             "required": true,
             "content": {
@@ -1122,7 +1131,7 @@ window.onload = function() {
             "id": {
               "type": "string",
               "description": "issue ID",
-              "example": "4a550bde-b8a7-4a05-a2ad-0dad2591b734"
+              "example": "83e641dc-1420-452e-bf80-b01a568d581a"
             },
             "type": {
               "type": "string",
@@ -1157,7 +1166,7 @@ window.onload = function() {
             "issueId": {
               "type": "string",
               "description": "Issue Id",
-              "example": "bfe4a773-0cfa-449d-ad10-348196bda062"
+              "example": "22126e32-221e-4d29-85ae-1522e1876588"
             }
           },
           "required": [
@@ -1170,17 +1179,17 @@ window.onload = function() {
             "id": {
               "type": "string",
               "description": "session Id",
-              "example": "2d364740-d5eb-43fd-9cb7-a94c88f5b3da"
+              "example": "18596ecd-5ea5-4c2e-b10b-fa984b1bd1ca"
             },
             "issueId": {
               "type": "string",
               "description": "Issue Id",
-              "example": "4ba683c5-e74f-472e-8283-5bf642da52e9"
+              "example": "ff6bd15d-5577-40a8-a984-96e14bf975f3"
             },
             "code": {
               "type": "string",
               "description": "code",
-              "example": "6e0a458e-376e-43e6-ab4e-842b2b2853c8"
+              "example": "e5054a18-c79d-417e-bfdf-c145801a7fe1"
             }
           },
           "required": [
@@ -1208,12 +1217,12 @@ window.onload = function() {
             "id": {
               "type": "string",
               "description": "session Id",
-              "example": "a9aac2f3-838c-404e-be95-e896391f7ea1"
+              "example": "61c6d295-c099-4891-8496-e2da60c8af2d"
             },
             "issueId": {
               "type": "string",
               "description": "Issue Id",
-              "example": "5f7608e2-2042-43ce-894c-60d12647906c"
+              "example": "4f58c97f-1401-4707-a089-ccaf9a819a2e"
             },
             "status": {
               "type": "string",
@@ -1229,7 +1238,7 @@ window.onload = function() {
             "statusUpdateAt": {
               "type": "date",
               "description": "Status updated date",
-              "example": "2024-04-11T22:42:04.104Z"
+              "example": "2024-04-11T23:48:08.859Z"
             },
             "statusByMentor": {
               "type": "string",
