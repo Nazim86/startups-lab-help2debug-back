@@ -24,6 +24,8 @@ export class CreateIssueUseCase implements ICommandHandler<CreateIssueCommand> {
   async execute({ createIssueDto, userId }: CreateIssueCommand) {
     const user = await this.userFacade.repository.findUserById(userId);
 
+    //TODO: Trancsaction
+
     const createdHashtags = await this.commandBus.execute(
       new CreateHashtagCommand(createIssueDto.hashtags),
     );
