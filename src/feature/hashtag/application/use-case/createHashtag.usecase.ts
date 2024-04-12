@@ -32,9 +32,7 @@ export class CreateHashtagUseCase
     const foundHashtags: Hashtag[] =
       await this.hashtagRepo.findHashtags(normalizedHashtags);
 
-    let hashtags: Hashtag[];
-
-    //TODO: cover with transaction
+    let hashtags: Hashtag[] = [];
 
     if (
       foundHashtags.length &&
@@ -60,14 +58,12 @@ export class CreateHashtagUseCase
       hashtags = this.createHashtags(mappedHashtagsDto);
     }
 
-    hashtags = await this.hashtagRepo.save(hashtags);
+    if (hashtags.length) {
+      hashtags = await this.hashtagRepo.save(hashtags);
 
-    if (!hashtags) {
-      return Result.Err(new CustomError('Something went wrong'));
+      //joining found and missed hashtags
+      foundHashtags.push(...hashtags);
     }
-
-    //joining found and missed hashtags
-    foundHashtags.push(...hashtags);
 
     return Result.Ok(foundHashtags);
   }

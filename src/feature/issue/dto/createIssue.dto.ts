@@ -7,7 +7,6 @@ export class CreateIssueDto {
     description: 'Assistance type',
     type: 'enum',
     enum: HelpType,
-    //example: HelpType,
   })
   @IsEnum(HelpType)
   @IsNotEmpty()

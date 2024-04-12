@@ -8,6 +8,8 @@ import {
   IsArray,
   ArrayMaxSize,
   ArrayMinSize,
+  IsEnum,
+  IsNumber,
 } from 'class-validator';
 import {
   ERROR_LENGTH_COMPANY_NAME,
@@ -16,6 +18,8 @@ import {
   ERROR_LENGTH_LAST_NAME,
   ERROR_LENGTH_USERNAME,
 } from '../user.constants';
+import { HelpType } from '../../mentor-setting/types/helpType.enum';
+import { Tier } from '../enum/tier.enum';
 
 export class UpdateUserDto {
   @ApiProperty({
@@ -90,4 +94,23 @@ export class UpdateUserDto {
   @IsArray()
   @IsOptional()
   hashtags: string[];
+
+  @ApiProperty({
+    description: 'User Level',
+    type: 'string',
+    enum: Tier,
+  })
+  @IsEnum(Tier)
+  @IsOptional()
+  tier: Tier;
+
+  @ApiProperty({
+    description: 'Earned coins',
+    type: 'number',
+    example: 5,
+  })
+  @IsOptional()
+  @IsNumber()
+  @IsNotEmpty()
+  coin: number;
 }

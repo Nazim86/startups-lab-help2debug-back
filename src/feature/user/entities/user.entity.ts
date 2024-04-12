@@ -39,7 +39,7 @@ export class User {
   tier: Tier;
 
   @Column({ type: 'bigint', nullable: true })
-  coins: number;
+  coin: number;
 
   @OneToOne(() => Account, (a) => a.user)
   @JoinColumn()

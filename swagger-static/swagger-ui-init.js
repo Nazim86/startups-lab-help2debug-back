@@ -924,12 +924,29 @@ window.onload = function() {
               "example": "[#Nestjs,#MongoDB]",
               "minLength": 3,
               "maxLength": 50
+            },
+            "tier": {
+              "type": "string",
+              "description": "User Level",
+              "enum": [
+                "Trainee",
+                "Junior",
+                "Middle",
+                "Senior"
+              ]
+            },
+            "coin": {
+              "type": "number",
+              "description": "Earned coins",
+              "example": 5
             }
           },
           "required": [
             "username",
             "firstName",
-            "lastName"
+            "lastName",
+            "tier",
+            "coin"
           ]
         },
         "ValidationPipeError": {
@@ -1131,7 +1148,7 @@ window.onload = function() {
             "id": {
               "type": "string",
               "description": "issue ID",
-              "example": "83e641dc-1420-452e-bf80-b01a568d581a"
+              "example": "d8e09de0-ea42-45f3-ba39-e11d3fe8752a"
             },
             "type": {
               "type": "string",
@@ -1166,7 +1183,7 @@ window.onload = function() {
             "issueId": {
               "type": "string",
               "description": "Issue Id",
-              "example": "22126e32-221e-4d29-85ae-1522e1876588"
+              "example": "ae6f0ab2-ea85-4d6d-bae2-5710823e2c3e"
             }
           },
           "required": [
@@ -1179,17 +1196,17 @@ window.onload = function() {
             "id": {
               "type": "string",
               "description": "session Id",
-              "example": "18596ecd-5ea5-4c2e-b10b-fa984b1bd1ca"
+              "example": "d8a2814b-83f6-4270-9c1e-20e5f707f4d4"
             },
             "issueId": {
               "type": "string",
               "description": "Issue Id",
-              "example": "ff6bd15d-5577-40a8-a984-96e14bf975f3"
+              "example": "67384981-4840-48e5-a78c-52ce58696ad3"
             },
             "code": {
               "type": "string",
               "description": "code",
-              "example": "e5054a18-c79d-417e-bfdf-c145801a7fe1"
+              "example": "6f5fa3ed-c452-44d9-8bcf-382dabc278e9"
             }
           },
           "required": [
@@ -1217,12 +1234,12 @@ window.onload = function() {
             "id": {
               "type": "string",
               "description": "session Id",
-              "example": "61c6d295-c099-4891-8496-e2da60c8af2d"
+              "example": "894fda5b-e785-4ef3-a687-20f461483b9f"
             },
             "issueId": {
               "type": "string",
               "description": "Issue Id",
-              "example": "4f58c97f-1401-4707-a089-ccaf9a819a2e"
+              "example": "d107402c-6534-4e4e-b0f5-edf12a82bfe7"
             },
             "status": {
               "type": "string",
@@ -1238,7 +1255,7 @@ window.onload = function() {
             "statusUpdateAt": {
               "type": "date",
               "description": "Status updated date",
-              "example": "2024-04-11T23:48:08.859Z"
+              "example": "2024-04-12T00:16:13.437Z"
             },
             "statusByMentor": {
               "type": "string",

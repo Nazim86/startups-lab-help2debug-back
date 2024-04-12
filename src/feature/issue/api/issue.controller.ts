@@ -65,7 +65,7 @@ export class IssueController {
     if (!updateResult.isSuccess) {
       throw updateResult.err;
     }
-    return;
+    return updateResult.value;
   }
 
   @ApiOperation({

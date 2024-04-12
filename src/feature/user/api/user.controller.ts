@@ -32,6 +32,6 @@ export class UserController {
       throw updateResult.err;
     }
 
-    return updateResult;
+    return updateResult.value;
   }
 }
