@@ -1,13 +1,16 @@
 import { Module } from '@nestjs/common';
-import { MentorSettingService } from './mentor-setting.service';
-import { MentorSettingController } from './mentor-setting.controller';
+import { MentorSettingController } from './api/mentor-setting.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SETTING_ENTITIES } from './entities';
+import { UpdateMentorSettingsUseCase } from './application/use-case/updateMentorSettings.usecase';
+import { MentorSettingRepository } from './db/mentorSetting.repository';
+import { CqrsModule } from '@nestjs/cqrs';
 
 @Module({
-  imports: [TypeOrmModule.forFeature(SETTING_ENTITIES)],
+  imports: [CqrsModule, TypeOrmModule.forFeature(SETTING_ENTITIES)],
 
   controllers: [MentorSettingController],
-  providers: [MentorSettingService],
+  providers: [UpdateMentorSettingsUseCase, MentorSettingRepository],
+  exports: [MentorSettingRepository],
 })
 export class MentorSettingModule {}

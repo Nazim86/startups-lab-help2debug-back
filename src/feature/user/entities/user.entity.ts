@@ -14,6 +14,7 @@ import { Hashtag } from '../../hashtag/entities/hashtag.entity';
 import { Session } from '../../session/entities/session.entity';
 import { Issue } from '../../issue/entities/issue.entity';
 import { Tier } from '../enum/tier.enum';
+import { MentorSetting } from '../../mentor-setting/entities/mentorSetting.entity';
 
 @Entity()
 export class User {
@@ -60,4 +61,8 @@ export class User {
   @OneToMany(() => Issue, (i) => i.user)
   @JoinColumn()
   issue: Issue[];
+
+  @OneToOne(() => MentorSetting, (m) => m.user)
+  @JoinColumn()
+  mentorSetting: MentorSetting;
 }

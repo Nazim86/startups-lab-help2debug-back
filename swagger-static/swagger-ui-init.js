@@ -61,6 +61,68 @@ window.onload = function() {
           ]
         }
       },
+      "/mentor-setting": {
+        "post": {
+          "operationId": "MentorSettingController_createMentorSetting",
+          "parameters": [],
+          "responses": {
+            "201": {
+              "description": ""
+            }
+          },
+          "tags": [
+            "Mentor Settings"
+          ]
+        },
+        "put": {
+          "operationId": "MentorSettingController_updateMentorSetting",
+          "summary": "обновить менторские настройки",
+          "description": "Какой тип помощи (интервью, кодревью и т.д.) и ссылка на видео-конеференцию (googlmeet, zoom и т. д.)",
+          "parameters": [],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateMentorSettingDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "204": {
+              "description": ""
+            },
+            "400": {
+              "description": "If the inputModel has incorrect values",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/BadRequestResponse"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Not permitted"
+            },
+            "404": {
+              "description": "Not found"
+            }
+          },
+          "tags": [
+            "Mentor Settings"
+          ],
+          "security": [
+            {
+              "bearer": []
+            }
+          ]
+        }
+      },
       "/hashtag": {
         "get": {
           "operationId": "HashtagController_getTagsForSuggestion",
@@ -177,79 +239,6 @@ window.onload = function() {
           },
           "tags": [
             "Auth"
-          ]
-        }
-      },
-      "/mentor-setting": {
-        "post": {
-          "operationId": "MentorSettingController_createMentorSetting",
-          "parameters": [],
-          "responses": {
-            "201": {
-              "description": ""
-            }
-          },
-          "tags": [
-            "Mentor Settings"
-          ]
-        }
-      },
-      "/mentor-setting/{id}": {
-        "put": {
-          "operationId": "MentorSettingController_update",
-          "summary": "обновить менторские настройки",
-          "description": "Какой тип помощи (интервью, кодревью и т.д.) и ссылка на видео-конеференцию (googlmeet, zoom и т. д.)",
-          "parameters": [
-            {
-              "name": "id",
-              "required": true,
-              "in": "path",
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "requestBody": {
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UpdateMentorSettingDto"
-                }
-              }
-            }
-          },
-          "responses": {
-            "204": {
-              "description": ""
-            },
-            "400": {
-              "description": "If the inputModel has incorrect values",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/BadRequestResponse"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Unauthorized"
-            },
-            "403": {
-              "description": "Not permitted"
-            },
-            "404": {
-              "description": "Not found"
-            }
-          },
-          "tags": [
-            "Mentor Settings"
-          ],
-          "security": [
-            {
-              "bearer": []
-            }
           ]
         }
       },
@@ -991,6 +980,38 @@ window.onload = function() {
             "message"
           ]
         },
+        "UpdateMentorSettingDto": {
+          "type": "object",
+          "properties": {
+            "helpType": {
+              "type": "string",
+              "description": "Help type",
+              "enum": [
+                "mock-interview",
+                "code-interview",
+                "consulting"
+              ]
+            },
+            "videoConferenceLink": {
+              "type": "string",
+              "description": "Video Conference Link",
+              "example": "https://www.zoom.com/id"
+            },
+            "liveStatus": {
+              "type": "string",
+              "description": "Live Status",
+              "enum": [
+                "active",
+                "inactive"
+              ]
+            }
+          },
+          "required": [
+            "helpType",
+            "videoConferenceLink",
+            "liveStatus"
+          ]
+        },
         "PageMetaDto": {
           "type": "object",
           "properties": {
@@ -1068,38 +1089,6 @@ window.onload = function() {
             "accessToken"
           ]
         },
-        "UpdateMentorSettingDto": {
-          "type": "object",
-          "properties": {
-            "helpType": {
-              "type": "string",
-              "description": "Help type",
-              "enum": [
-                "mock-interview",
-                "code-interview",
-                "consulting"
-              ]
-            },
-            "videoConferenceLink": {
-              "type": "string",
-              "description": "Video Conference Link",
-              "example": "https://www.zoom.com/id"
-            },
-            "liveStatus": {
-              "type": "string",
-              "description": "Live Status",
-              "enum": [
-                "active",
-                "inactive"
-              ]
-            }
-          },
-          "required": [
-            "helpType",
-            "videoConferenceLink",
-            "liveStatus"
-          ]
-        },
         "CreateIssueDto": {
           "type": "object",
           "properties": {
@@ -1148,7 +1137,7 @@ window.onload = function() {
             "id": {
               "type": "string",
               "description": "issue ID",
-              "example": "d77e1bf8-5c1d-4332-be49-ef7c1c461dec"
+              "example": "dc233fe0-6d7d-40c9-ab37-6f842eec6996"
             },
             "type": {
               "type": "string",
@@ -1183,7 +1172,7 @@ window.onload = function() {
             "issueId": {
               "type": "string",
               "description": "Issue Id",
-              "example": "be749943-feb0-4c32-bbc3-2b1d0e81d53b"
+              "example": "ab1c2428-3cbc-46ab-adcd-77a5f26f31d4"
             }
           },
           "required": [
@@ -1196,17 +1185,17 @@ window.onload = function() {
             "id": {
               "type": "string",
               "description": "session Id",
-              "example": "1657f23d-3795-4ebf-8653-80e6588f1476"
+              "example": "820119cb-b39f-4332-a1fc-dcad4fb7788d"
             },
             "issueId": {
               "type": "string",
               "description": "Issue Id",
-              "example": "eae9e17b-36fc-41d1-a257-2dcde652a4c6"
+              "example": "4c56d6a6-5772-4519-bfa7-bee1a3012179"
             },
             "code": {
               "type": "string",
               "description": "code",
-              "example": "cb4ad6c6-eaee-44ca-a5b0-4c6651646103"
+              "example": "0da4c164-7e6a-41a7-ae52-d0aa5cff096c"
             }
           },
           "required": [
@@ -1234,12 +1223,12 @@ window.onload = function() {
             "id": {
               "type": "string",
               "description": "session Id",
-              "example": "8706827d-ff4b-4a05-84c4-98bbe79ec6d1"
+              "example": "77fc32ad-c4f5-43ad-8bd2-95358878b094"
             },
             "issueId": {
               "type": "string",
               "description": "Issue Id",
-              "example": "f1e2f81c-324d-4ba7-bdd3-b43ae5105048"
+              "example": "4cb3d4e5-c772-4e12-a8bf-f7c3e2a80434"
             },
             "status": {
               "type": "string",
@@ -1255,7 +1244,7 @@ window.onload = function() {
             "statusUpdateAt": {
               "type": "date",
               "description": "Status updated date",
-              "example": "2024-04-12T05:31:35.681Z"
+              "example": "2024-04-12T08:26:56.509Z"
             },
             "statusByMentor": {
               "type": "string",

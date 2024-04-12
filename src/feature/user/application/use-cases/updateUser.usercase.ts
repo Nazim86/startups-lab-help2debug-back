@@ -42,7 +42,7 @@ export class UpdateUserUseCase implements ICommandHandler {
     user.firstName = updateDto.firstName;
     user.lastName = updateDto.lastName;
     user.companyName = updateDto.company;
-    user.hashtag = createdHashtags;
+    user.hashtag = createdHashtags.value;
     user.tier = updateDto.tier;
     user.coin = updateDto.coin;
 

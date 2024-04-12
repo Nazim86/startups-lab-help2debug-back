@@ -10,6 +10,7 @@ import { UpdateUserCommand } from '../application/use-cases/updateUser.usercase'
 import { AccessTokenGuard } from '../../auth/guards/accessJwt.guard';
 
 @ApiTags('User')
+@UseGuards(AccessTokenGuard)
 @Controller('user')
 export class UserController {
   constructor(private readonly commandBus: CommandBus) {}
@@ -17,7 +18,6 @@ export class UserController {
     summary: 'Update user profile',
     description: 'Отправляем firstName, lastName, username*, tags[]',
   })
-  @UseGuards(AccessTokenGuard)
   @UpdateUserSwaggerDecorator()
   @Put()
   async update(

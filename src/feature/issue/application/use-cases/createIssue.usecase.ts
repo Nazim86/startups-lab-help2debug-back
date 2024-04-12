@@ -39,7 +39,7 @@ export class CreateIssueUseCase implements ICommandHandler<CreateIssueCommand> {
     newIssue.title = createIssueDto.title;
     newIssue.description = createIssueDto.description;
     newIssue.user = user;
-    newIssue.hashtag = createdHashtags;
+    newIssue.hashtag = createdHashtags.value;
 
     //TODO: DO I need to get user entity and update hashtags there
 

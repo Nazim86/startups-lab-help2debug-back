@@ -5,6 +5,10 @@ import { User } from '../../entities/user.entity';
 import { Account } from '../../entities/account.entity';
 import { Provider } from '../../enum/account.enum';
 import { Result } from '../../../../core/result';
+import { MentorSetting } from '../../../mentor-setting/entities/mentorSetting.entity';
+import { LiveStatus } from '../../../mentor-setting/types/liveStatus.enum';
+import { MentorSettingRepository } from '../../../mentor-setting/db/mentorSetting.repository';
+import { HelpType } from '../../../mentor-setting/types/helpType.enum';
 
 export class LinkAccountToExistingUserCommand {
   constructor(
@@ -17,7 +21,10 @@ export class LinkAccountToExistingUserCommand {
 export class LinkAccountToExistingUserUseCase
   implements ICommandHandler<LinkAccountToExistingUserCommand>
 {
-  constructor(private readonly userRepo: UserRepository) {}
+  constructor(
+    private readonly userRepo: UserRepository,
+    private readonly mentorSettingRepo: MentorSettingRepository,
+  ) {}
 
   async execute({
     provider,
@@ -66,7 +73,16 @@ export class LinkAccountToExistingUserUseCase
     account.username = username;
     account.email = email;
     account.user = newUser;
-    await this.userRepo.saveAccount(account);
+    const newAccount = await this.userRepo.saveAccount(account);
+
+    //TODO:create mentorSetting here or while updating mentorSetting
+    const mentorSetting = new MentorSetting();
+    mentorSetting.status = LiveStatus.INACTIVE;
+    mentorSetting.helpType = HelpType.CONSULTING; //TODO: problem of creating mentor setting here is that what to pass as the first value here
+    mentorSetting.user = newUser;
+    mentorSetting.accountId = newAccount.id;
+
+    await this.mentorSettingRepo.save(mentorSetting);
 
     return user;
   }
