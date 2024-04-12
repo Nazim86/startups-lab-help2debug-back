@@ -5,7 +5,7 @@ import { Issue } from '../../issue/entities/issue.entity';
 @Entity()
 export class Hashtag {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column({ type: 'varchar' })
   title: string;

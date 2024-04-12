@@ -8,6 +8,7 @@ import { IssueRepository } from './db/issue.repository';
 import { CqrsModule } from '@nestjs/cqrs';
 import { UserModule } from '../user/user.module';
 import { HashtagModule } from '../hashtag/hashtag.module';
+import { IssueQueryRepository } from './db/issue.query.repository';
 
 @Module({
   imports: [
@@ -17,6 +18,11 @@ import { HashtagModule } from '../hashtag/hashtag.module';
     HashtagModule,
   ],
   controllers: [IssueController],
-  providers: [IssueService, ...ISSUE_USE_CASES, IssueRepository],
+  providers: [
+    IssueService,
+    ...ISSUE_USE_CASES,
+    IssueRepository,
+    IssueQueryRepository,
+  ],
 })
 export class IssueModule {}

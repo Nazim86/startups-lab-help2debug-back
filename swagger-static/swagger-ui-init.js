@@ -291,36 +291,25 @@ window.onload = function() {
               "bearer": []
             }
           ]
-        }
-      },
-      "/issue/{id}": {
-        "put": {
-          "operationId": "IssueController_update",
-          "summary": "Update issue",
-          "description": "Пользователь может обновить Запрос, которые он хочет удовлетворить: {type, title, description, hashtags }",
-          "parameters": [
-            {
-              "name": "id",
-              "required": true,
-              "in": "path",
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "requestBody": {
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CreateIssueDto"
+        },
+        "get": {
+          "operationId": "IssueController_getForUser",
+          "summary": "Вернуть все запросы для конкретного юзера (+по токену)",
+          "description": "",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/IssueResponseDto"
+                    }
+                  }
                 }
               }
-            }
-          },
-          "responses": {
-            "204": {
-              "description": ""
             },
             "400": {
               "description": "If the inputModel has incorrect values",
@@ -352,14 +341,14 @@ window.onload = function() {
           ]
         }
       },
-      "/issue/{userId}": {
-        "get": {
-          "operationId": "IssueController_getForUser",
-          "summary": "Вернуть все запросы для конкретного юзера (+по токену)",
-          "description": "",
+      "/issue/{id}": {
+        "put": {
+          "operationId": "IssueController_update",
+          "summary": "Update issue",
+          "description": "Пользователь может обновить Запрос, которые он хочет удовлетворить: {type, title, description, hashtags }",
           "parameters": [
             {
-              "name": "userId",
+              "name": "id",
               "required": true,
               "in": "path",
               "schema": {
@@ -367,19 +356,19 @@ window.onload = function() {
               }
             }
           ],
-          "responses": {
-            "200": {
-              "description": "",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/IssueResponseDto"
-                    }
-                  }
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateIssueDto"
                 }
               }
+            }
+          },
+          "responses": {
+            "204": {
+              "description": ""
             },
             "400": {
               "description": "If the inputModel has incorrect values",
@@ -1137,7 +1126,7 @@ window.onload = function() {
             "id": {
               "type": "string",
               "description": "issue ID",
-              "example": "dc233fe0-6d7d-40c9-ab37-6f842eec6996"
+              "example": "083f840f-b28d-471c-bec3-f5bfad1a406a"
             },
             "type": {
               "type": "string",
@@ -1157,13 +1146,23 @@ window.onload = function() {
               "type": "string",
               "description": "Description of the issue",
               "example": "I need help for interview preparation, I need react redux and mobx"
+            },
+            "hashtag": {
+              "type": "string",
+              "description": "Hashtags for the issue",
+              "example": [
+                "react",
+                "nestjs",
+                "typeorm"
+              ]
             }
           },
           "required": [
             "id",
             "type",
             "title",
-            "description"
+            "description",
+            "hashtag"
           ]
         },
         "CreateSessionDto": {
@@ -1172,7 +1171,7 @@ window.onload = function() {
             "issueId": {
               "type": "string",
               "description": "Issue Id",
-              "example": "ab1c2428-3cbc-46ab-adcd-77a5f26f31d4"
+              "example": "34364136-3ec3-4365-80f6-addf322dd156"
             }
           },
           "required": [
@@ -1185,17 +1184,17 @@ window.onload = function() {
             "id": {
               "type": "string",
               "description": "session Id",
-              "example": "820119cb-b39f-4332-a1fc-dcad4fb7788d"
+              "example": "1a4d120a-4580-4d1b-ae01-5904e4b6b335"
             },
             "issueId": {
               "type": "string",
               "description": "Issue Id",
-              "example": "4c56d6a6-5772-4519-bfa7-bee1a3012179"
+              "example": "e2b37c28-32be-4b0d-819a-7b0b7dd91051"
             },
             "code": {
               "type": "string",
               "description": "code",
-              "example": "0da4c164-7e6a-41a7-ae52-d0aa5cff096c"
+              "example": "2e6d70ab-fc74-4525-a735-cee8ccf048cc"
             }
           },
           "required": [
@@ -1223,12 +1222,12 @@ window.onload = function() {
             "id": {
               "type": "string",
               "description": "session Id",
-              "example": "77fc32ad-c4f5-43ad-8bd2-95358878b094"
+              "example": "baa13106-d363-41d5-adc1-7dc7d1fb7ddc"
             },
             "issueId": {
               "type": "string",
               "description": "Issue Id",
-              "example": "4cb3d4e5-c772-4e12-a8bf-f7c3e2a80434"
+              "example": "8ede8ef9-feac-4490-bf2d-e26957f89609"
             },
             "status": {
               "type": "string",
@@ -1244,7 +1243,7 @@ window.onload = function() {
             "statusUpdateAt": {
               "type": "date",
               "description": "Status updated date",
-              "example": "2024-04-12T08:26:56.509Z"
+              "example": "2024-04-12T09:26:01.229Z"
             },
             "statusByMentor": {
               "type": "string",

@@ -17,12 +17,17 @@ import { CommandBus } from '@nestjs/cqrs';
 import { CreateIssueCommand } from '../application/use-cases';
 import { CurrentUserId } from '../../../core/decorators/currentUserId.decorator';
 import { UpdateIssueCommand } from '../application/use-cases/updateIssue.usecase';
+import { IssueQueryRepository } from '../db/issue.query.repository';
+import { Issue } from '../entities/issue.entity';
 
 @ApiTags('Issues')
 @UseGuards(AccessTokenGuard)
 @Controller('issue')
 export class IssueController {
-  constructor(private readonly commandBus: CommandBus) {}
+  constructor(
+    private readonly commandBus: CommandBus,
+    private readonly issueQueryRepo: IssueQueryRepository,
+  ) {}
 
   @ApiOperation({
     summary: 'Create a new issue',
@@ -73,9 +78,11 @@ export class IssueController {
     description: '',
   })
   @GetIssueSwaggerDecorator()
-  @Get(':userId')
-  getForUser(@Param('userId') userId: string): string {
-    // server redirect to ZOOM/GoogleMeet
-    return 'get all issues of user';
+  @Get()
+  async getForUser(@CurrentUserId() userId: string) {
+    const issues = await this.issueQueryRepo.getIssuesForUser(userId);
+
+    // server redirect to ZOOM/GoogleMeet //TODO: Is this mistake?
+    return issues;
   }
 }
