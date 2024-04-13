@@ -18,7 +18,6 @@ import { CreateIssueCommand } from '../application/use-cases';
 import { CurrentUserId } from '../../../core/decorators/currentUserId.decorator';
 import { UpdateIssueCommand } from '../application/use-cases/updateIssue.usecase';
 import { IssueQueryRepository } from '../db/issue.query.repository';
-import { Issue } from '../entities/issue.entity';
 
 @ApiTags('Issues')
 @UseGuards(AccessTokenGuard)
