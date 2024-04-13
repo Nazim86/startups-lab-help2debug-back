@@ -2,6 +2,7 @@ import {
   Column,
   Entity,
   ManyToMany,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -13,10 +14,16 @@ import { Issue } from '../../issue/entities/issue.entity';
 @Entity()
 export class Session {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column({ type: 'varchar' })
   issueId: string;
+
+  @Column({ type: 'varchar' })
+  mentorId: string;
+
+  @Column({ type: 'uuid' })
+  code: string;
 
   @Column({ type: 'varchar' })
   status: SessionStatus;
@@ -36,12 +43,9 @@ export class Session {
   @Column({ type: 'varchar' })
   statusByMentee: StatusByParticipant;
 
-  @Column({ type: 'uuid' })
-  code: string;
+  // @ManyToMany(() => User, (u) => u.session) //TODO: need for this relation
+  // user: User[];
 
-  @ManyToMany(() => User, (u) => u.session)
-  user: User[];
-
-  @OneToOne(() => Issue, (i) => i.session)
+  @ManyToOne(() => Issue, (i) => i.session)
   issue: Issue;
 }

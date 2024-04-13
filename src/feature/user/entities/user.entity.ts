@@ -54,9 +54,9 @@ export class User {
   @JoinTable()
   hashtag: Hashtag[];
 
-  @ManyToMany(() => Session, (s) => s.user)
-  @JoinTable()
-  session: Session[];
+  // @ManyToMany(() => Session, (s) => s.user) //TODO: need for this relation
+  // @JoinTable()
+  // session: Session[];
 
   @OneToMany(() => Issue, (i) => i.user)
   @JoinColumn()

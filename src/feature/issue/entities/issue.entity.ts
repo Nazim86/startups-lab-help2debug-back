@@ -1,9 +1,11 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -33,8 +35,9 @@ export class Issue {
   @JoinTable()
   hashtag: Hashtag[];
 
-  @OneToOne(() => Session, (s) => s.issue)
-  session: Session;
+  @OneToMany(() => Session, (s) => s.issue)
+  @JoinColumn()
+  session: Session[];
 
   @ManyToOne(() => User, (u) => u.issue)
   user: User;

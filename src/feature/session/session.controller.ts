@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiOkResponse,
@@ -16,11 +25,22 @@ import { CreateSessionSwaggerDecorator } from '../../core/swagger/session/create
 import { SessionQueryDto } from './dto/sessionQuery.dto';
 import { GetMySessionsSwaggerDecorator } from '../../core/swagger/session/getMySessions.swagger.decorator';
 import { CreateFeedbackDto } from './dto/createFeedbackDto';
+import { Result } from '../../core/result';
+import { Session } from './entities/session.entity';
+import { CommandBus } from '@nestjs/cqrs';
+import { CreateSessionCommand } from './application/use-cases/createSession.usecase';
+import { AccessTokenGuard } from '../auth/guards/accessJwt.guard';
+import { CurrentUserId } from '../../core/decorators/currentUserId.decorator';
+import { SessionQueryRepository } from './db/session.query.repository';
 
 @ApiTags('Sessions')
 @Controller('session')
+@UseGuards(AccessTokenGuard)
 export class SessionController {
-  constructor() {}
+  constructor(
+    private readonly commandBus: CommandBus,
+    private readonly sessionQueryRepo: SessionQueryRepository,
+  ) {}
 
   @ApiOperation({
     summary: 'создать сессию',
@@ -29,8 +49,26 @@ export class SessionController {
   })
   @CreateSessionSwaggerDecorator()
   @Post()
-  create(@Body() createSessionDto: CreateSessionDto): string {
-    return 'create session';
+  async create(
+    @CurrentUserId() userId: string,
+    @Body() createSessionDto: CreateSessionDto,
+  ): Promise<CreateSessionResponseDto> {
+    const session: Result<Session> = await this.commandBus.execute(
+      new CreateSessionCommand(createSessionDto, userId),
+    );
+
+    if (!session.isSuccess) {
+      throw session.err;
+    }
+
+    const sessionView: Result<CreateSessionResponseDto> =
+      await this.sessionQueryRepo.getSessionViewById(session.value.id);
+
+    if (!sessionView.isSuccess) {
+      throw sessionView.err;
+    }
+
+    return sessionView.value;
   }
 
   @ApiOperation({
