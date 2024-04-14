@@ -24,5 +24,6 @@ import { IssueQueryRepository } from './db/issue.query.repository';
     IssueRepository,
     IssueQueryRepository,
   ],
+  exports: [IssueRepository], //TODO: need to do using Facade?
 })
 export class IssueModule {}

@@ -32,6 +32,8 @@ import { CreateSessionCommand } from './application/use-cases/createSession.usec
 import { AccessTokenGuard } from '../auth/guards/accessJwt.guard';
 import { CurrentUserId } from '../../core/decorators/currentUserId.decorator';
 import { SessionQueryRepository } from './db/session.query.repository';
+import { ConnectToSessionDto } from './dto/connectToSessionDto';
+import { ConnecToSessionCommand } from './application/use-cases/connectToSession.usecase';
 
 @ApiTags('Sessions')
 @Controller('session')
@@ -78,12 +80,26 @@ export class SessionController {
   })
   @ConnectSessionSwaggerDecorator()
   @Get(':id/:code')
-  connectToSession(
+  async connectToSession(
+    @CurrentUserId() userId: string,
     @Param('id') sessionId: string,
     @Param('code') code: string,
-  ): string {
+  ) {
+    const connectToSessionDto: ConnectToSessionDto = {
+      userId,
+      sessionId,
+      code,
+    };
+    const connectionResult = await this.commandBus.execute(
+      new ConnecToSessionCommand(connectToSessionDto),
+    );
+
+    if (!connectionResult.isSuccess) {
+      throw connectionResult.err;
+    }
+
     // server redirect to ZOOM/GoogleMeet
-    return 'connect to session';
+    return connectionResult.value; //TODO: By redirecting means returning connection link?
   }
 
   @ApiOperation({
@@ -93,7 +109,7 @@ export class SessionController {
   })
   @GetAllSessionSwaggerDecorator()
   @Get()
-  allSessions(@Query() query: SessionQueryDto): string {
+  async allSessions(@Query() query: SessionQueryDto): Promise<string> {
     // server redirect to ZOOM/GoogleMeet
     return 'all sessions';
   }

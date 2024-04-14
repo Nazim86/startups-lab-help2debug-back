@@ -17,4 +17,8 @@ export class SessionRepository {
   async findSessionByIssueId(issueId: string): Promise<Session | null> {
     return this.sessionRepo.findOne({ where: { issueId } });
   }
+
+  async findSessionById(sessionId: string): Promise<Session | null> {
+    return this.sessionRepo.findOne({ where: { id: sessionId } });
+  }
 }

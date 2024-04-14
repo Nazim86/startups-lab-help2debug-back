@@ -43,9 +43,9 @@ export class Session {
   @Column({ type: 'varchar' })
   statusByMentee: StatusByParticipant;
 
-  // @ManyToMany(() => User, (u) => u.session) //TODO: need for this relation
+  // @ManyToMany(() => User, (u) => u.session) //TODO: is there need for this relation
   // user: User[];
 
-  @ManyToOne(() => Issue, (i) => i.session)
-  issue: Issue;
+  // @ManyToOne(() => Issue, (i) => i.session) //TODO: is there need for this relation
+  // issue: Issue;
 }
