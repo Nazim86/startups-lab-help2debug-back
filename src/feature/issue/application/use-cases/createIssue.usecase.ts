@@ -21,7 +21,10 @@ export class CreateIssueUseCase implements ICommandHandler<CreateIssueCommand> {
     private readonly issueRepo: IssueRepository,
   ) {}
 
-  async execute({ createIssueDto, userId }: CreateIssueCommand) {
+  async execute({
+    createIssueDto,
+    userId,
+  }: CreateIssueCommand): Promise<Result<string>> {
     const user = await this.userFacade.repository.findUserById(userId);
 
     //TODO: Trancsaction
@@ -44,6 +47,7 @@ export class CreateIssueUseCase implements ICommandHandler<CreateIssueCommand> {
     //TODO: DO I need to get user entity and update hashtags there
 
     const created = await this.issueRepo.saveIssue(newIssue);
-    return Result.Ok(created);
+
+    return Result.Ok(created.id);
   }
 }

@@ -18,10 +18,34 @@ export class IssueQueryRepository {
       .where('u.id = :userId', { userId })
       .getMany();
 
-    return this.mapIssueView(issues);
+    return this.mapIssuesView(issues);
   }
 
-  private mapIssueView(issues: Issue[]): IssueResponseDto[] {
+  async getIssueViewById(issueId: string) {
+    const issue = await this.issueRepo
+      .createQueryBuilder('i')
+      .leftJoinAndSelect('i.user', 'u')
+      .leftJoinAndSelect('i.hashtag', 'h')
+      .where('i.id = :issueId', { issueId })
+      .getOne();
+    const hashtags = issue.hashtag.map((h) => {
+      return {
+        id: h.id,
+        title: h.title,
+        normalized: h.normalized,
+      };
+    });
+    return {
+      id: issue.id,
+      type: issue.type,
+      title: issue.title,
+      description: issue.description,
+      hashtag: hashtags,
+      userId: issue.user.id,
+    };
+  }
+
+  private mapIssuesView(issues: Issue[]): IssueResponseDto[] {
     return issues.map((issue: Issue): IssueResponseDto => {
       const hashtags = issue.hashtag.map((h) => {
         return {

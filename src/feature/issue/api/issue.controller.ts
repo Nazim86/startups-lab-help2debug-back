@@ -18,6 +18,9 @@ import { CreateIssueCommand } from '../application/use-cases';
 import { CurrentUserId } from '../../../core/decorators/currentUserId.decorator';
 import { UpdateIssueCommand } from '../application/use-cases/updateIssue.usecase';
 import { IssueQueryRepository } from '../db/issue.query.repository';
+import { NotFoundError } from '../../../core/config/exceptions';
+import { ERROR_ISSUE_NOT_FOUND } from '../issue.constants';
+import { IssueResponseDto } from '../responses';
 
 @ApiTags('Issues')
 @UseGuards(AccessTokenGuard)
@@ -38,7 +41,7 @@ export class IssueController {
   async create(
     @Body() createIssueDto: CreateIssueDto,
     @CurrentUserId() userId: string,
-  ): Promise<string> {
+  ): Promise<IssueResponseDto> {
     const resultCreated = await this.commandBus.execute(
       new CreateIssueCommand(createIssueDto, userId),
     );
@@ -47,7 +50,15 @@ export class IssueController {
       throw resultCreated.err;
     }
 
-    return resultCreated.value;
+    const issueView = await this.issueQueryRepo.getIssueViewById(
+      resultCreated.value,
+    );
+
+    if (!issueView) {
+      throw new NotFoundError(ERROR_ISSUE_NOT_FOUND);
+    }
+
+    return issueView;
   }
 
   @ApiOperation({
